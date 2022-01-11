@@ -69,8 +69,5 @@ int main(int argc, const char * argv[])
     s1 = -1 * s1;
     printStatisticianInfo(s1);
 
-    
-        
-
     return 0;
 }

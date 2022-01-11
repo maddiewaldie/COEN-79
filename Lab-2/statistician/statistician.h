@@ -67,8 +67,37 @@ namespace coen79_lab2
 {
     class statistician
     {
+        public:
 
-    }
+            // Constructor (see description in block comment at top of file)
+            statistician();
+
+            // Public modification member functions (see descriptions in block comment at top of file)
+            void next(double r);    // Add a number to the sequence
+            void reset();           // Erase the sequence
+
+            // Public constant member functions (see descriptions in block comment at top of file)
+            int length() const;         // Return the number of values in the sequence
+            double sum() const;         // Return the sum of the numbers in the sequence
+            double mean() const;        // Return the mean of the numbers in the sequence
+            double minimum() const;     // Return the smallest number in the sequence
+            double maximum() const;     // Return the largest number in the sequence
+
+            // Non member functions for the statistician class
+            friend statistician operator +(const statistician& s1, const statistician& s2);
+            friend statistician operator *(double scale, const statistician& s);
+            
+        private:
+            // Member variables used in functions
+            int count;              // How many numbers in the sequence
+            double totalSum;        // The sum of all the numbers in the sequence
+            double min;             // The smallest number in the sequence
+            double max;             // The largest number in the sequence
+
+    };
+
+    // Non member functions for the statistician class
+    bool operator ==(const statistician& s1, const statistician& s2); // Needs to be declared OUTSIDE the class
     
 }
 
