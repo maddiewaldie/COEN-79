@@ -25,10 +25,9 @@ void printNumsBackwards(char nums[10]) {
 }
 
 /*
- * Function: printPattern
+ * Function: printPattern - print numbers in pattern specified
  * Parameters: char nums[10]
  * Return: void
- * Prints array in pattern as demonstrated on Camino
  */
 void printPattern(char nums[10]) {
 	// Print before pattern:

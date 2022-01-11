@@ -1,5 +1,6 @@
-/* COEN 79 - Lab 1
- * 1/7/22
+/* COEN 79 - Lab #1
+ * Madeleine Waldie
+ * 1/7/21
  */
 
 #include <iostream>
@@ -10,10 +11,9 @@
 using namespace std;
 
 /*
- * Function: print
+ * Function: printUppercase - Prints text using format as shown on camino.
  * Parameters: string text
  * Return: void
- * Prints text using format as shown on camino.
  */
 void printUppercase(string text) {
 	// Initialize variables & iterators
@@ -24,22 +24,27 @@ void printUppercase(string text) {
 
 	for(int i = 0; i < length; i++) { // Loop through the length of the text
 
+		// c will be the character that we are currently on
 		char c = text.at(i);
 
-		if(c != 32) { //search for space in text
+		// Search for any spaces in the text
+		if(c != 32) {
 
-			if(c >= 'A' && c <= 'Z') { //if uppercase alphabetic add to char temp[]
+			// If it's an uppercase alphabetic char, add to the wordsToPrint array
+			if(c >= 'A' && c <= 'Z') {
 				wordsToPrint[k] = c;
 				k++;
 			}
 
-			else if(c >= 'a' && c <= 'z') //if lowercase alphabetic make uppercase and add to char temp[]
+			// If it's lowercase, make the character uppercase and add to the wordsToPrint array
+			else if(c >= 'a' && c <= 'z') 
 			{
 				wordsToPrint[k] = c - 32;
 				k++;
 			}
 
-		} else if(k >= 10) { //once space is found if temp is larger then 10 characters print temp.
+		// If the word is larger than 10 characters, print the word
+		} else if(k >= 10) {
 
 			for(int j = 0; j < k; j++)
 			{
@@ -47,7 +52,7 @@ void printUppercase(string text) {
 			}
 			
 			cout << endl;
-			k = 0; //resets temp index
+			k = 0; // Resets the words to print index
 
 		} else {
 			k = 0;

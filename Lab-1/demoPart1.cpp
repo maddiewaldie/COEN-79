@@ -14,8 +14,8 @@ using namespace std;
 /*
  * Function: isCharAlphanumeric - checks if character is alphanumeric
  * 	Returns true if alphanumeric (otherwise, returns false)
- * Parameter: Character c
- * Return: Boolean
+ * Parameter: char c
+ * Return: bool
  */
 
 bool isCharAlphanumeric(char c) {
@@ -32,15 +32,14 @@ bool isCharAlphanumeric(char c) {
 }
 
 /*
- * Function: countCharacters
- * Parameter: Character input[100]
+ * Function: countCharacters - counts the amount of alpha-numeric and non alpha-numeric characters in input
+ * Parameter: char input[100]
  * Return: void
- * Counts the amount of alpha-numeric and non alpha-numeric characters in input
  */
 
 void count(char input[100]) {
 	// Initialize variables
-        int i = 0;
+    int i = 0;
 	int numAlphanumeric = 0;
 	int numNonalphanumeric = 0;
         
