@@ -35,8 +35,27 @@ namespace coen79_lab2 {
     
     class rand_gen
     {
+        public:
+            // Constructor (see description in block comment at top of file)
+            rand_gen(int initSeed = 0, int initMult = 0, int initInc = 0, int initMod = 0) {
+                seed = initSeed;
+                multiplier = initMult;
+                increment = initInc;
+                mod = initMod;
+            }
 
-        
+            // Public modification member functions
+            void set_seed(int newSeed);     // Change the value of the seed
+            int next();                     // Generate the next number
+
+            // Public constant member functions
+            void print_info();
+
+        private:
+            int seed;
+            int multiplier;
+            int increment;
+            int mod;
     };
 }
 
