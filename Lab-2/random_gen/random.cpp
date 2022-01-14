@@ -16,6 +16,8 @@ namespace coen79_lab2
     }
     int rand_gen::next() // Getter method to return value of seed
     {
+	// Check that mod isn't equal to 0 (it won't work!)
+	assert(mod != 0);
         // Set seed to the equation specified in the lab document
         seed = (multiplier * seed + increment) % mod;
 
@@ -28,7 +30,7 @@ namespace coen79_lab2
         cout << "Seed: " << seed << endl;
         cout << "Multiplier: " << multiplier << endl;
         cout << "Increment: " << increment << endl;
-        cout << "Mod: " << mod << endl;
+        cout << "Modulus: " << mod << endl;
     }
 }
 
