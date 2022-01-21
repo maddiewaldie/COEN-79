@@ -126,7 +126,7 @@ namespace coen79_lab3
         assert(is_item());
 
         // Loop through the sequence
-        for(size_type i = iterator;i < total-1; i++) {
+        for(size_type i = iterator;i < total - 1; i++) {
             // Shift the elements up one
             array[i] = array[i + 1];
         }
@@ -177,17 +177,19 @@ namespace coen79_lab3
     }
 
     void sequence::remove_front() { // Remove the first item from the sequence
+        start();
         // First, we need to make sure that is_item() returns true
         assert(is_item());
+        remove_current();
 
-        // Loop through the elements in the sequence to remove the first item
-        for (size_type i = iterator; i < total; i++)
-        {
-            // Shift the elements in the sequence up
-            array[i] = array[i + 1];
-        }
-        total--;        // Decrement the total number of elements, as we just removed the first item
-        iterator = 0;   // Set iterator back to zero!
+        // // Loop through the elements in the sequence to remove the first item
+        // for (size_type i = 0; i < total; i++)
+        // {
+        //     // Shift the elements in the sequence up
+        //     array[i] = array[i + 1];
+        // }
+        // total--;        // Decrement the total number of elements, as we just removed the first item
+        // iterator = 0;   // Set iterator back to zero!
     }
 
     void sequence::operator +=(const sequence& rhs) { // Add the items of rhs to the lhs
