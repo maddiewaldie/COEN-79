@@ -221,7 +221,7 @@ namespace coen79_lab3
 
     sequence::value_type sequence::operator[](int index) const { // Returns the item stored at "index"
         // First, we need to make sure the index is less than the total number of elements in the sequence
-        assert(index < total);
+        assert(index < int(total));
 
         // If all is good, we can return the item stored at index!
         return array[index];
