@@ -1,6 +1,11 @@
 // FILE: sequence1.cpp
 // CLASS IMPLEMENTED: sequence (see sequence1.h for documentation)
 
+// INVARIANTS OF THE CLASS:
+    // If used == 0, the sequence is empty
+    // If used > 0,  the items are stored in array[0] through array[used - 1]
+    // We don't care what's stored in array[used] through array[CAP]
+
 #include <stdio.h>
 #include <iostream>
 #include <cassert>
