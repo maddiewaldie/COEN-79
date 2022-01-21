@@ -37,7 +37,7 @@ namespace coen79_lab3
         // Next, we check to see if we're at the end of the sequence
         if(iterator < (CAPACITY - 1)) {
             // If we're not at the end of the sequence, we can increase the iterator's value
-            iterator++;
+            ++iterator;
         }
     }
 
@@ -61,7 +61,7 @@ namespace coen79_lab3
             // If there are no elements, insert the new entry to the front of the sequence
             array[0] = entry;   // First element is the new entry
             iterator = 0;       // Set the iterator to 0
-            total++;            // Increment the total number of elements in the array
+            ++total;            // Increment the total number of elements in the array
         }
         // Otherwise, add the new element to array and then shift the other elements down
         else
@@ -77,7 +77,7 @@ namespace coen79_lab3
             array[iterator] = entry;
             
             // Increment the total elements in the sequence
-            total++;
+            ++total;
         }
     }
 
@@ -91,14 +91,14 @@ namespace coen79_lab3
             // If there aren't any items in the sequence, insert the entry to the beginning of the sequence
             array[0] = entry;   // First element is the new entry
             iterator = 0;       // Set the iterator to 0
-            total++;            // Increment the total number of elements in the array
+            ++total;            // Increment the total number of elements in the array
         }
         // If the item isn't a current item in the array, attach the new entry to the end
         else if(!is_item())
         {
             array[total] = entry;   // Last element is the new entry
             iterator = total;       // Set the iterator to the total number of elements
-            total++;                // Increment the total number of elements in the array
+            ++total;                // Increment the total number of elements in the array
         }
         // Otherwise, we know there IS a current item in the array
         // So, we can add the new element after the current item in the array & then shift the other elements
@@ -114,10 +114,10 @@ namespace coen79_lab3
             array[iterator + 1] = entry;
 
             // Increment the iterator
-            iterator++;
+            ++iterator;
 
             // Increment the total number of elements in the array
-            total++;
+            ++total;
         }
     }
 
@@ -126,7 +126,7 @@ namespace coen79_lab3
         assert(is_item());
 
         // Loop through the sequence
-        for(size_type i = iterator;i < total-1; i++) {
+        for(size_type i = iterator;i < total-1; ++i) {
             // Shift the elements up one
             array[i] = array[i + 1];
         }
@@ -145,7 +145,7 @@ namespace coen79_lab3
             // If there aren't any items in the sequence, insert the entry to the beginning of the sequence
             array[0] = entry;   // First element is the new entry
             iterator = 0;       // Iterator is set to 0
-            total++;            // Increment the total number of elements in the sequence
+            ++total;            // Increment the total number of elements in the sequence
         }
         // Otherwise, we need to add in the new entry to the beginning of the existing sequence
         else
@@ -159,7 +159,7 @@ namespace coen79_lab3
 
             // Add the new entry to the front of the sequence
             array[iterator] = entry;
-            total++;        // Increment the total number of elements
+            ++total;        // Increment the total number of elements
             iterator = 0;   // Reset the iterator to be zero
         }
         
@@ -170,7 +170,7 @@ namespace coen79_lab3
         assert(size() < CAPACITY);
 
         // Next, we can add the new entry to the back of the sequence
-        array[total++] = entry;
+        array[++total] = entry;
 
         // And then, we need to change the iterator to be equal to the total number of elements
         iterator = total;
@@ -181,7 +181,7 @@ namespace coen79_lab3
         assert(is_item());
 
         // Loop through the elements in the sequence to remove the first item
-        for (size_type i = iterator; i < total; i++)
+        for (size_type i = iterator; i < total; ++i)
         {
             // Shift the elements in the sequence up
             array[i] = array[i + 1];
@@ -195,10 +195,10 @@ namespace coen79_lab3
         assert((rhs.size()+total) < CAPACITY);
         
         // Go through the rhs array and add the elements to the existing (lhs) array
-        for(size_type i = 0; i < rhs.size(); i++)
+        for(size_type i = 0; i < rhs.size(); ++i)
         {
             // Increment total while also adding the rhs elements to the lhs elements
-            array[total++] = rhs.array[i];
+            array[++total] = rhs.array[i];
         }
     }
 
@@ -237,7 +237,7 @@ namespace coen79_lab3
         double sum = 0.0;
 
         // Loop through the sequence
-        for (size_type i = 0; i < total; i++)
+        for (size_type i = 0; i < total; ++i)
         {
             // For each value in the sequence, add the value to the sum
             sum += array[i];
@@ -284,7 +284,7 @@ namespace coen79_lab3
         double sum = 0.0;
 
         // Loop through the sequence
-        for (sequence::size_type i = 0; i < s.size(); i++)
+        for (sequence::size_type i = 0; i < s.size(); ++i)
         {
             // Add each element of the sequence to the sum
             sum+=s[i];
