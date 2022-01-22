@@ -188,14 +188,8 @@ namespace coen79_lab3
     void sequence::operator +=(const sequence& rhs) { // Add the items of rhs to the lhs
         // First, we need to check the precondition that the total number of elements in the rhs + the total number of elements in the lhs is less than the total capacity 
         assert((rhs.size()+total) < CAPACITY);
-        
-        // Go through the rhs array and add the elements to the existing (lhs) array
-        //for(size_type i = 0; i < rhs.size(); i++)
-        //{
-            // Increment total while also adding the rhs elements to the lhs elements
-            //array[total++] = rhs.array[i];
-        //}
 
+        // Copy the elements from the rhs to the lhs
         copy(rhs.array, rhs.array + rhs.total, array + total);
         total += rhs.total;
     }
@@ -205,9 +199,16 @@ namespace coen79_lab3
         assert((lhs.size() + rhs.size()) < sequence::CAPACITY);
 
         // If so, we can proceed with adding the two arrays
-        copy(rhs.array, rhs.array + rhs.total, lhs.array + lhs.total);
-        lhs.total += rhs.size();
-    } */
+        //copy(rhs.array, rhs.array + rhs.total, lhs.array + lhs.total);
+        //lhs.total += rhs.size();
+
+        for(int i = 0; i < rhs.size(); i++) {
+            lhs.attach_back(rhs.current());
+            rhs.advance();
+        }
+
+        return lhs;
+    } */ 
 
     sequence::size_type sequence::size() const { // Return the total # of elements in the sequence
         return total;
