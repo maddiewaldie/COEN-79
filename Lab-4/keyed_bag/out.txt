@@ -44,4 +44,3 @@ Erasing all of kb2.
 Bag size: 0
 Inserting 22 with key "I'm feelin'".
 Value for "I'm feelin'": 22
-

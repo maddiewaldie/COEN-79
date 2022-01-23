@@ -109,7 +109,7 @@ namespace coen79_lab4
             total = 0;
 
             // Next, we need to loop through the keys and data arrays to assign them "blank" values, as there aren't any keys or data yet
-            for (int i = 0; i < CAPACITY; i++)
+            for (int i = 0; i < int(CAPACITY); i++)
             {
                 keys[i] = "";   // The keys are of key_type string, so we can set each element to an empty string
                 data[i] = 0;    // The data is of value_type int, so we can set each element to the int 0

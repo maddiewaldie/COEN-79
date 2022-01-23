@@ -105,6 +105,7 @@ namespace coen79_lab4
                 return data[i]; // So, return the data at the key
             }
         }
+	return 0;
     }
 
     keyed_bag::size_type keyed_bag::size() const { // Return the total number of elements in the bag
