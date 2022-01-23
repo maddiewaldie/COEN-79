@@ -157,7 +157,7 @@ namespace coen79_lab3 {
         void insert_front(const value_type& entry); // Add a new entry to the beginning of the sequence
         void attach_back(const value_type& entry);  // Add a new entry to the back of the sequence
         void remove_front();                        // Remove the first item from the sequence
-        void operator +=(const sequence& rhs);      // Add the items of rhs to the lhs
+       void operator +=(const sequence& rhs);      // Add the items of rhs to the lhs
 
         // Constant Member Functions
         size_type size() const;                     // Return the total # of elements in the sequence
@@ -177,7 +177,7 @@ namespace coen79_lab3 {
     // Non-Member Functions
     sequence operator +(const sequence& lhs, const sequence& rhs);  // Returns a sequence that contains all the numbers of the sequences of lsh and rhs
     sequence::value_type summation(const sequence &s);              // Returns the summation of the values stored in the sequence s
-
+    //sequence operator +=(sequence& lhs, sequence& rhs);
 }
 
 #endif

@@ -194,7 +194,7 @@ namespace coen79_lab3
         total += rhs.total;
     }
 
-    /* sequence operator+=(sequence& lhs, sequence& rhs) { // Add the items of rhs to the lhs
+    /*sequence operator+=(sequence& lhs, sequence& rhs) { // Add the items of rhs to the lhs
         // First, we need to make sure the lhs and rhs's number of elements combined is less than the total capacity
         assert((lhs.size() + rhs.size()) < sequence::CAPACITY);
 
@@ -202,13 +202,13 @@ namespace coen79_lab3
         //copy(rhs.array, rhs.array + rhs.total, lhs.array + lhs.total);
         //lhs.total += rhs.size();
 
-        for(int i = 0; i < rhs.size(); i++) {
+        for(int i = 0; i < int(rhs.size()); i++) {
             lhs.attach_back(rhs.current());
             rhs.advance();
         }
 
         return lhs;
-    } */ 
+    } */
 
     sequence::size_type sequence::size() const { // Return the total # of elements in the sequence
         return total;
