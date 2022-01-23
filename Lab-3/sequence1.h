@@ -175,7 +175,7 @@ namespace coen79_lab3 {
     };
 
     // Non-Member Functions
-    sequence operator +=(sequence& lhs, sequence& rhs);
+    sequence operator +=(sequence& lhs, sequence& rhs);             // Add the items of rhs to the lhs
     sequence operator +(const sequence& lhs, const sequence& rhs);  // Returns a sequence that contains all the numbers of the sequences of lsh and rhs
     sequence::value_type summation(const sequence &s);              // Returns the summation of the values stored in the sequence s
 }
