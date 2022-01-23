@@ -178,13 +178,14 @@ namespace coen79_lab3
 
     void sequence::remove_front() { // Remove the first item from the sequence
         // Move to the first elt in the sequence
-	start();
+        start();
         // We need to make sure that is_item() returns true, as it's a precondition!!
         assert(is_item());
-	// The current item is the first item of the sequence, so we can just remove current!
+        // The current item is the first item of the sequence, so we can just remove current!
         remove_current();
     }
 
+    //This function is commented out after the announcement that operator += should be a NONMEMBER function
     /*void sequence::operator +=(const sequence& rhs) { // Add the items of rhs to the lhs
         // First, we need to check the precondition that the total number of elements in the rhs + the total number of elements in the lhs is less than the total capacity 
         assert((rhs.size()+total) < CAPACITY);
@@ -259,37 +260,52 @@ namespace coen79_lab3
     }
 
     // NON-MEMBER FUNCTIONS
-    sequence operator+=(const sequence& lhs, const sequence& rhs) { // Add the items of rhs to the lhs
+    sequence operator+=(sequence& lhs, sequence& rhs) { // Add the items of rhs to the lhs
         // First, we need to make sure the lhs and rhs's number of elements combined is less than the total capacity
         assert((lhs.size() + rhs.size()) < sequence::CAPACITY);
 
-        // Create a new sequence
-        sequence new_sequence;
+        // Go to the end of the lhs
+        lhs.end();
+        // Go to the next available slot of the lhs (where we'll start adding values)
+        lhs.advance();
+        // Start the rhs
+        rhs.start();
 
-        // Loop through the lhs and add its elements to the sequence
-        for (size_t i = 0; i < lhs.size(); i++){
-            new_sequence.insert(lhs.current());
+        // Loop through the rhs and add the elements to the lhs
+        for (size_t i = 0; i < rhs.size(); i++) {
+            lhs.insert(rhs.current()); // Insert the current rhs at the current lhs slot
+            lhs.advance(); // Go to the next slot in lhs
+            rhs.advance(); // Go to the next slot in lhs
         }
 
-        // Loop through the lhs and add its elements to the sequence
-        for (size_t i = 0; i < rhs.size(); i++){
-            new_sequence.insert(lhs.current());
-        }
-
-        // Return the new sequence
-        return new_sequence;
+        // Return the modified lhs
+        return lhs;
     }
 
     sequence operator +(const sequence& lhs, const sequence& rhs) { // Returns a sequence that contains all the numbers of the sequences of lsh and rhs
        // First, we need to make sure the lhs and rhs's number of elements combined is less than the total capacity
         assert((lhs.size() + rhs.size()) < sequence::CAPACITY);
 
-        // If so, we can proceed with adding together the two sequences. We can do this by making a new sequence and adding the lhs / rhs to it.
-        sequence newSequence;   // Create an empty, new sequence
-        newSequence += lhs;     // Add the lhs to the new sequence
-        newSequence += rhs;     // Add the rhs to the new sequence
-        newSequence.start();    // Make sure the new sequence is "started"
-        return newSequence;     // Return the new sequence
+        // Create a new sequence
+        sequence new_sequence;
+
+        // Loop through the lhs and add its elements to the new sequence
+        for (size_t i = 0; i < lhs.size(); i++) {
+            new_sequence.insert(lhs[i]);    // Insert the element at the current slot
+            new_sequence.advance();         // Go to the next slot
+        }
+
+        // Loop through the rhs and add its elements to the new sequence
+        for (size_t i = 0; i < rhs.size(); i++) {
+            new_sequence.insert(rhs[i]);    // Insert the element at the current slot
+            new_sequence.advance();         // Go to the next slot
+        }
+
+        // Start the new sequence
+        new_sequence.start();
+
+        // Return the new sequence (aka: the sum of the two)
+        return new_sequence;
     }
 
     sequence::value_type summation(const sequence &s) { // Returns the summation of the values stored in the sequence s
