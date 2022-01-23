@@ -185,30 +185,14 @@ namespace coen79_lab3
         remove_current();
     }
 
-    void sequence::operator +=(const sequence& rhs) { // Add the items of rhs to the lhs
+    /*void sequence::operator +=(const sequence& rhs) { // Add the items of rhs to the lhs
         // First, we need to check the precondition that the total number of elements in the rhs + the total number of elements in the lhs is less than the total capacity 
         assert((rhs.size()+total) < CAPACITY);
 
         // Copy the elements from the rhs to the lhs
         copy(rhs.array, rhs.array + rhs.total, array + total);
         total += rhs.total;
-    }
-
-    /*sequence operator+=(sequence& lhs, sequence& rhs) { // Add the items of rhs to the lhs
-        // First, we need to make sure the lhs and rhs's number of elements combined is less than the total capacity
-        assert((lhs.size() + rhs.size()) < sequence::CAPACITY);
-
-        // If so, we can proceed with adding the two arrays
-        //copy(rhs.array, rhs.array + rhs.total, lhs.array + lhs.total);
-        //lhs.total += rhs.size();
-
-        for(int i = 0; i < int(rhs.size()); i++) {
-            lhs.attach_back(rhs.current());
-            rhs.advance();
-        }
-
-        return lhs;
-    } */
+    }*/
 
     sequence::size_type sequence::size() const { // Return the total # of elements in the sequence
         return total;
@@ -275,6 +259,27 @@ namespace coen79_lab3
     }
 
     // NON-MEMBER FUNCTIONS
+    sequence operator+=(const sequence& lhs, const sequence& rhs) { // Add the items of rhs to the lhs
+        // First, we need to make sure the lhs and rhs's number of elements combined is less than the total capacity
+        assert((lhs.size() + rhs.size()) < sequence::CAPACITY);
+
+        // Create a new sequence
+        sequence new_sequence;
+
+        // Loop through the lhs and add its elements to the sequence
+        for (size_t i = 0; i < lhs.size(); i++){
+            new_sequence.insert(lhs.current());
+        }
+
+        // Loop through the lhs and add its elements to the sequence
+        for (size_t i = 0; i < rhs.size(); i++){
+            new_sequence.insert(lhs.current());
+        }
+
+        // Return the new sequence
+        return new_sequence;
+    }
+
     sequence operator +(const sequence& lhs, const sequence& rhs) { // Returns a sequence that contains all the numbers of the sequences of lsh and rhs
        // First, we need to make sure the lhs and rhs's number of elements combined is less than the total capacity
         assert((lhs.size() + rhs.size()) < sequence::CAPACITY);
