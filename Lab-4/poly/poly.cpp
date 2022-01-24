@@ -253,6 +253,10 @@ namespace coen79_lab4
 
                 out << abs (p.coefficient(i));
 
+                if((p.coefficient(i) % 1) == 0) {
+                    out << .0;
+                }
+
                 if (i != 0 && i != 1) {
                     out << "x^" << i << " ";
                 } else if (i == 1) {
@@ -262,7 +266,7 @@ namespace coen79_lab4
 
         }
 
-        if(zero) out << 0;
+        if(zero) out << 0.0;
 
         return out;            
     }
