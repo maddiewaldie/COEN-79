@@ -252,6 +252,10 @@ namespace coen79_lab4
                 else if (i == 0)
                     out << p.coefficient(i);
             }
+
+            if(p.coefficient(i) == 0) {
+                out << 0.0;
+            }
                 
         }
         return out;
