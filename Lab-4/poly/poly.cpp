@@ -237,27 +237,33 @@ namespace coen79_lab4
     
     // NON-MEMBER OUTPUT FUNCTIONS
     std::ostream& operator << (std::ostream& out, const polynomial& p) { // Print out the polynomial
-        for (int i = int(p.degree()); i >= 0; i--)
-        {
-            if(p.coefficient(i) != 0)
-            {
-                if (p.coefficient(i) < 0)
-                    out << "-";
-                else if (i != int(p.degree()) && i != 1)
-                    out << "+";
-                if(i > 1)
-                    out << p.coefficient(i) << "x^" << i << " ";
-                else if (i == 1)
-                    out << p.coefficient(i) << "x ";
-                else if (i == 0)
-                    out << p.coefficient(i);
+    	int i;
+        unsigned int d = p.degree();
+        bool zero = true;
+        for(i = int(d); i >= 0; i--){
+            if(p.coefficient(i) != 0) {
+
+                zero = false;
+                if (p.coefficient(i) >= 0 && i != int(d)) {
+                    out << "+ ";
+                }
+                if (p.coefficient(i) < 0) {
+                    out << "- ";
+                }
+
+                out << abs (p.coefficient(i));
+
+                if (i != 0 && i != 1) {
+                    out << "x^" << i << " ";
+                } else if (i == 1) {
+                    out << "x ";
+                }
             }
 
-            if(p.coefficient(i) == 0) {
-                out << 0.0;
-            }
-                
         }
-        return out;
+
+        if(zero) out << 0;
+
+        return out;            
     }
 }
