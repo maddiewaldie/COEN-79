@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <cassert>
+#include <climits>
 #include <cmath>
 #include "poly.h"
 
@@ -20,7 +21,7 @@ namespace coen79_lab4
         assert(exponent <= MAXIMUM_DEGREE);
 
         // Loop through the array and set all coefficients to 0 (as there aren't any yet!)
-        for(int i = 0; i <= MAXIMUM_DEGREE; i++) {
+        for(unsigned int i = 0; i <= MAXIMUM_DEGREE; i++) {
             array[i] = 0; // Set to 0
         }
         // Set the coefficient to c!
@@ -36,7 +37,7 @@ namespace coen79_lab4
         currentDegree = 0;
 
         // Next, loop through the array of coefficients, from the highest degree to the lowest degree
-        for (int i = polynomial::MAXIMUM_DEGREE; i > 0; i--) {
+        for (unsigned int i = polynomial::MAXIMUM_DEGREE; i > 0; i--) {
             // Check whether or not the coefficient is 0
             if (array[i] != 0) {
                 // If the coefficient isn't 0, we need to set the current degree to the degree corresponding to the coefficient (i)
@@ -72,7 +73,7 @@ namespace coen79_lab4
 
     void polynomial::clear() { // Resets all the coefficients of the polynomial to zero
         // Set all the coefficients in the array to 0
-        for(int i = 0; i < polynomial::MAXIMUM_DEGREE + 1; i++) {
+        for(unsigned int i = 0; i < polynomial::MAXIMUM_DEGREE + 1; i++) {
             array[i] = 0;
         }
 
@@ -89,7 +90,7 @@ namespace coen79_lab4
         polynomial antiDeriv;
 
         // Loop through the polynomial and calculate the antiderivative
-        for (int i = 0; i <= currentDegree; i++)
+        for (unsigned int i = 0; i <= currentDegree; i++)
         {
             // Assign each term to its antiderivative
             antiDeriv.assign_coef(coefficient(i) * pow(i + 1, -1), i + 1);
@@ -121,7 +122,7 @@ namespace coen79_lab4
         polynomial deriv;
 
         // Lop through the polynomial
-        for (int i = 0;i <= currentDegree; i++) {
+        for (unsigned int i = 0;i <= currentDegree; i++) {
             deriv.array[i - 1] = (array[i] * i); //everything shifts left and coefficients are multiplied by their old exponent
         }
 
@@ -137,7 +138,7 @@ namespace coen79_lab4
         double sum = 0.0;
 
         // Loop through the polynomial
-        for (int i = 0; i < MAXIMUM_DEGREE + 1 ; i++) {
+        for (unsigned int i = 0; i < MAXIMUM_DEGREE + 1 ; i++) {
             // Add up the elements of the polynomial, given x
             sum += array[i] * pow(x, i);
         }
@@ -158,7 +159,7 @@ namespace coen79_lab4
 
     unsigned int polynomial::next_term(unsigned int e) const { // Return the next exponent, n, which is LARGER than e such that coefficient(n) != 0
         // Loop through the polynomial from e to the max degree (as we don't care about anything less than e in this case)
-        for(int i = e; i < polynomial::MAXIMUM_DEGREE; i++) {
+        for(unsigned int i = e; i < polynomial::MAXIMUM_DEGREE; i++) {
             // If the next element isn't 0
             if(array[i + 1] != 0) {
                 return i + 1; // Then, we should return i + 1!
@@ -171,7 +172,7 @@ namespace coen79_lab4
 
     unsigned int polynomial::previous_term(unsigned int e) const { // Return the next exponent, n, which is SMALLER than e such that coefficient(n) != 0
         // Loop through all the terms with an exponent less than e
-        for(int i = e; i > 0; i--) {
+        for(unsigned int i = e; i > 0; i--) {
             // If the previous element isn't 0
             if(array[i-1] != 0) {
                 return i - 1; // Then we should return i - 1!
@@ -193,7 +194,7 @@ namespace coen79_lab4
         polynomial sum;
 
         // Next, we can loop through the polynomial and add the terms together
-        for (int i = 0; i < polynomial::MAXIMUM_DEGREE + 1; i++) {
+        for (unsigned int i = 0; i < polynomial::MAXIMUM_DEGREE + 1; i++) {
             sum.assign_coef(p1.coefficient(i) + p2.coefficient(i), i);
         }
         
@@ -206,7 +207,7 @@ namespace coen79_lab4
         polynomial diff = p1;
 
         // Next, we can loop through the polynomial and subtract the terms
-        for (int i = 0; i < polynomial::MAXIMUM_DEGREE + 1; i++) {
+        for (unsigned int i = 0; i < polynomial::MAXIMUM_DEGREE + 1; i++) {
             diff.add_to_coef(-1 * p2.coefficient(i), i);
         }
 
@@ -222,9 +223,9 @@ namespace coen79_lab4
         polynomial product;
 
         // Loop through the first polynomial
-        for (int i =0; i<=p1.degree(); i++) {
+        for (unsigned int i =0; i<=p1.degree(); i++) {
             // Loop through the second polynomial
-            for(int j = 0;j<=p2.degree();j++){
+            for(unsigned int j = 0;j<=p2.degree();j++){
                 // Multiply the coefficients together & add the degrees
                 product.add_to_coef(p1.coefficient(i) * p2.coefficient(j), i + j);
             }
@@ -236,24 +237,23 @@ namespace coen79_lab4
     
     // NON-MEMBER OUTPUT FUNCTIONS
     std::ostream& operator << (std::ostream& out, const polynomial& p) { // Print out the polynomial
-        // Loop through the polynomial
-        for (int i = p.degree(); i >= 0; --i) {
-            // If the coefficient's greater than zero
-            if (p.coefficient(i) > 0) {
-                // Print a + in front of the coefficient, followed by x to the ith power
-                 out << "+" << p.coefficient(i) << "x^" << i << " ";
+        for (int i = int(p.degree()); i >= 0; i--)
+        {
+            if(p.coefficient(i) != 0)
+            {
+                if (p.coefficient(i) < 0)
+                    out << "-";
+                else if (i != int(p.degree()) && i != 1)
+                    out << "+";
+                if(i > 1)
+                    out << p.coefficient(i) << "x^" << i << " ";
+                else if (i == 1)
+                    out << p.coefficient(i) << "x ";
+                else if (i == 0)
+                    out << p.coefficient(i);
             }
-            // If the coefficient equals zero, we just need to put a space
-            else if (p.coefficient(i) == 0) {
-                 out<< " ";
-            }
-            // If the coefficient is less than zero
-            else {
-                // Put a - in front of the coefficient, followed by x to the ith power
-                out << "-" << p.coefficient(i) << "x^" << i << " ";
-            }
+                
         }
-        // Return the output stream!
         return out;
     }
 }
