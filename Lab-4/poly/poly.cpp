@@ -240,18 +240,23 @@ namespace coen79_lab4
     	int i;
         unsigned int d = p.degree();
         bool zero = true;
+        bool firstNum = true;
         for(i = int(d); i >= 0; i--){
             if(p.coefficient(i) != 0) {
 
                 zero = false;
-                if (p.coefficient(i) >= 0 && i != int(d)) {
+                if ((p.coefficient(i) >= 0) && (i != int(d))) {
                     out << "+ ";
                 }
-                if (p.coefficient(i) < 0) {
+                if ((p.coefficient(i) < 0) && firstNum) {
+                    out << "-";
+                    firstNum = false;
+                }
+                else if (p.coefficient(i) < 0) {
                     out << "- ";
                 }
-
-                out << abs (p.coefficient(i));
+                
+                out << abs(p.coefficient(i));
 
                 if((p.coefficient(i) == double(int(p.coefficient(i))))) {
                     out << ".0";
