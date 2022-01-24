@@ -26,6 +26,7 @@
         "memory_resource": "cpp",
         "optional": "cpp",
         "type_traits": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "iosfwd": "cpp"
     }
 }

@@ -145,21 +145,47 @@ namespace coen79_lab4
 {
     class polynomial
     {
-
     public:
     	// CONSTANTS
     	static const unsigned int MAXIMUM_DEGREE = 29;
 
+        // CONSTRUCTOR
+        polynomial(double c = 0.0, unsigned int exponent = 0);
 
+        // HELPER MEMBER FUNCTIONS
+        void update_current_degree();   // Set the current degree to the highest exponent with a non-zero coefficient
+
+        // MODIFICATION MEMBER FUNCTIONS
+        void assign_coef(double coefficient, unsigned int exponent);    // Set the coefficient for the specified exponent
+        void add_to_coef(double amount, unsigned int exponent);         // Add the given amount to the coefficient of the specified exponent
+        void clear();                                                   // Resets all the coefficients of the polynomial to zero
+
+        // CONSTANT MEMBER FUNCTIONS
+        polynomial antiderivative() const;                      // Return the antiderivative (indefinite integral) of the polynomial
+        double coefficient(unsigned int exponent) const;        // Return the coefficient at a specified exponent of the polynomial
+        double definite_integral(double x0, double x1) const;   // Return the definite integral from x0 to x1
+        unsigned int degree() const;                            // Return the value of the largest exponent with a non-zero coefficient
+        polynomial derivative( ) const;                         // Return the first derivative of the polynomial
+        double eval(double x) const;                            // Return the value of the polynomial with the given value for the variable x
+        bool is_zero( ) const;                                  // Check if the polynomial is the zero polynomial
+        unsigned int next_term(unsigned int e) const;           // Return the next exponent, n, which is LARGER than e such that coefficient(n) != 0
+        unsigned int previous_term(unsigned int e) const;       // Return the next exponent, n, which is SMALLER than e such that coefficient(n) != 0
+
+        // CONSTANT OPERATORS
+        double operator( ) (double x) const;    // Same as eval
+
+    private:
+        unsigned int currentDegree;         // An unsigned int to keep track of the current degree
+        double array[MAXIMUM_DEGREE + 1];   // An array of the coefficients, where the index corresponds to the degree
     };
 
     // NON-MEMBER BINARY OPERATORS
-    polynomial operator +(const polynomial& p1, const polynomial& p2);
-    polynomial operator -(const polynomial& p1, const polynomial& p2);
-    polynomial operator *(const polynomial& p1, const polynomial& p2);
+    polynomial operator +(const polynomial& p1, const polynomial& p2);  // Return the sum of the two polynomials as a polynomial
+    polynomial operator -(const polynomial& p1, const polynomial& p2);  // Return the difference of the two polynomials as a polynomial 
+    polynomial operator *(const polynomial& p1, const polynomial& p2);  // Return the product of the two polynomials as a polynomial
 
     
     // NON-MEMBER OUTPUT FUNCTIONS
-    std::ostream& operator << (std::ostream& out, const polynomial& p);
+    std::ostream& operator << (std::ostream& out, const polynomial& p); // Print out the polynomial
 }
 #endif
