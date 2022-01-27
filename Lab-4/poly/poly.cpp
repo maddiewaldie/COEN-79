@@ -2,7 +2,9 @@
 // CLASS IMPLEMENTED: poly (see poly.h for documentation)
 
 // INVARIANTS OF THE CLASS:
-    // 
+    // If currentDegree = 0 and array[0] = 0, then the polynomial is equal to 0
+    // If currentDegree > 0, then the polynomial coefficients are stored in array[0] through array[currentDegree]
+    // We don't care what's stored in array[currentDegree] through array[MAXIMUM_DEGREE]
 
 #include <stdio.h>
 #include <iostream>
@@ -121,7 +123,7 @@ namespace coen79_lab4
         // Next, we can make a temporary polynomial to store the derivative (we'll return this!)
         polynomial deriv;
 
-        // Lop through the polynomial
+        // Loop through the polynomial
         for (int i = 0;i <= int(currentDegree); i++) {
             deriv.array[i - 1] = (array[i] * i); //everything shifts left and coefficients are multiplied by their old exponent
         }
@@ -237,40 +239,51 @@ namespace coen79_lab4
     
     // NON-MEMBER OUTPUT FUNCTIONS
     std::ostream& operator << (std::ostream& out, const polynomial& p) { // Print out the polynomial
-    	int i;
+	// First, make an int to keep track of the degree of the polynomial
         unsigned int d = p.degree();
+	// Also, make a bool to keep track of whether or not the first coefficient is equal to zero
         bool zero = true;
-        for(i = int(d); i >= 0; i--){
-            if(p.coefficient(i) != 0) {
 
+	// Next, loop through the elements in the polynomial
+        for(int i = int(d); i >= 0; i--){
+	    // If the coefficient isn't zero
+            if(p.coefficient(i) != 0) {
+		// We know we don't have to print a "0.0"
                 zero = false;
+		// If the coefficient's positive & it's not the very first element to be printed
                 if ((p.coefficient(i) >= 0) && (i != int(d))) {
-                    out << "+ ";
+                    out << " + "; // Print out a plus
                 }
+		// If the very first coefficient's a negative
                 if ((p.coefficient(i) < 0) && (i == int(d))) {
-                    out << "-";
+                    out << "-"; // Print out a minus sign with no special spaces added to it
                 }
+		// Otherwise, print a minus sign with spaces around it
                 else if (p.coefficient(i) < 0 && (i != int(d))) {
-                    out << "- ";
+                    out << " - ";
                 }
                 
+		// Now, we can add the absolute value of the coefficient to the + / - sign!
                 out << abs(p.coefficient(i));
 
+		// Additionally, if the number is whole, the number won't be printed with a ".0". So, we can add it on to make it match the format in poly_out.txt
                 if((p.coefficient(i) == double(int(p.coefficient(i))))) {
                     out << ".0";
                 }
 
+		// Here, we can print out the term as x, or x to the somethingth, depending on the exponent
                 if (i != 0 && i != 1) {
-                    out << "x^" << i << " ";
+                    out << "x^" << i;
                 } else if (i == 1) {
-                    out << "x ";
+                    out << "x";
                 }
             }
 
         }
-
+	// Finally, if everything's zero, print out 0!
         if(zero) out << "0.0";
 
+	// Return the output stream!
         return out;            
     }
 }
