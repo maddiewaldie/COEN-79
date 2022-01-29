@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include <cassert>
 #include <climits>
 #include <cmath>
@@ -95,9 +96,8 @@ namespace coen79_lab4
         for (int i = 0; i <= int(currentDegree); i++)
         {
             // Assign each term to its antiderivative
-            antiDeriv.assign_coef(coefficient(i) * pow(i + 1, -1), i + 1);
-        }
-
+            antiDeriv.assign_coef(coefficient(i) / (i+1), i + 1);
+	}
         // Return the antiderivative
         return antiDeriv;
     }
@@ -243,7 +243,9 @@ namespace coen79_lab4
         unsigned int d = p.degree();
 	// Also, make a bool to keep track of whether or not the first coefficient is equal to zero
         bool zero = true;
-
+	int old_precision = cout.precision();
+	out << fixed;
+	out << setprecision(1);
 	// Next, loop through the elements in the polynomial
         for(int i = int(d); i >= 0; i--){
 	    // If the coefficient isn't zero
@@ -264,12 +266,14 @@ namespace coen79_lab4
                 }
                 
 		// Now, we can add the absolute value of the coefficient to the + / - sign!
-                out << abs(p.coefficient(i));
+                //out << setprecision(1) << abs(p.coefficient(i));
+
+		out << abs(p.coefficient(i));
 
 		// Additionally, if the number is whole, the number won't be printed with a ".0". So, we can add it on to make it match the format in poly_out.txt
-                if((p.coefficient(i) == double(int(p.coefficient(i))))) {
-                    out << ".0";
-                }
+                //if((p.coefficient(i) == double(int(p.coefficient(i))))) {
+                  //  out << ".0";
+               // }
 
 		// Here, we can print out the term as x, or x to the somethingth, depending on the exponent
                 if (i != 0 && i != 1) {
@@ -280,6 +284,8 @@ namespace coen79_lab4
             }
 
         }
+
+	out << setprecision(old_precision);
 	// Finally, if everything's zero, print out 0!
         if(zero) out << "0.0";
 
