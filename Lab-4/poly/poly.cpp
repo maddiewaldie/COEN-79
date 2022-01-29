@@ -286,6 +286,7 @@ namespace coen79_lab4
         }
 
 	out << setprecision(old_precision);
+	out.unsetf(ios_base::floatfield);
 	// Finally, if everything's zero, print out 0!
         if(zero) out << "0.0";
 
