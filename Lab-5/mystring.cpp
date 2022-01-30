@@ -162,7 +162,7 @@ namespace coen79_lab5
 
     int string::search(char c) const {
         for(size_t i = 0; i < length();i++){						//traverse and if its the right char return index; if not found return -1
-			if(characters[i] = c)
+			if(characters[i] == (c))
 				return i;
 		}
 		return -1;
