@@ -161,13 +161,11 @@ namespace coen79_lab5
     }
 
     int string::search(char c) const {
-        int i;
-        for (i = 0; i < int(current_length); i++)
-        {
-            if (characters[i] == c) //if string contains c, returns index
-                return i;
-        }
-        return -1;
+        for(size_t i = 0; i < length();i++){						//traverse and if its the right char return index; if not found return -1
+			if(characters[i] = c)
+				return i;
+		}
+		return -1;
     }
 
     int string::search(const string& substring) const {
