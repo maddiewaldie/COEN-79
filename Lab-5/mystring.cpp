@@ -139,7 +139,7 @@ namespace coen79_lab5{
 							//traverse to find a char and return position
 	int string::search(char c) const{
 		for(size_t i = 0; i < length();i++){						//traverse and if its the right char return index; if not found return -1
-			if(characters[i] = c)
+			if(characters[i] == c)
 				return i;
 		}
 		return -1;
@@ -163,7 +163,7 @@ namespace coen79_lab5{
 	unsigned int string::count(char c) const{
 		int count = 0;
 		for(size_t i =0; i< length(); i++){						//traverse and count if its the right char
-			if(characters[i] = c)
+			if(characters[i] == c)
 				count++;
 		}
 		return count;

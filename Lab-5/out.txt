@@ -7,7 +7,7 @@ s1: A
 s1 length: 1
 s1: AB
 s1 length: 2
-s1: ABC
+s1: ABC
 s1 length: 3
 *** [] operator test ***
 s1[0]: A
@@ -35,8 +35,8 @@ A <= B: true
 B <= A: false
 *** + operator tests ***
 A + B: AB
-A + C: AC
-B + A: BA
+A + C: ðAC
+B + A: ðBA
 *** >> operator test ***
 Please enter a word: university
 You entered: university
@@ -44,31 +44,31 @@ You entered: university
 C: C
 *** insert tests ***
 s1: ABCD
-s1: -ABCD
-s1: -AB*CD
-s1: -AB*CD.
+s1: -ACD
+s1: -AC*Drsity
+s1: -AC*Dr.sty
 *** dlt tests ***
 s1: 1112233445555
-s1: 2233445555
-s1: 22445555
-s1: 2244
+s1: 2232233445555
+s1: 2223233445555
+s1: 2223455545555
 *** replace tests ***
-s1: abc
-s1: zbc
-s1: zyc
-s1: zyx
+s1: abc
+s1: zbc
+s1: zyc
+s1: zyx
 s1: 123DEFGHIJKLMNOP
 s1: 123DE123IJKLMNOP
 s1: 123DE123IJKLM123
 *** count tests ***
-s1: ABBCCCDDDD
+s1: ABBCCCDDDDKLM123
 Num A's: 1
 Num B's: 2
 Num C's: 3
 Num D's: 4
 Num E's: 0
 *** search tests ***
-s1: ABBCCCDDDD
+s1: ABBCCCDDDDKLM123
 First A: 0
 First B: 1
 First C: 3
