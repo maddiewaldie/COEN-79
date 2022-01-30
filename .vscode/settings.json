@@ -27,6 +27,8 @@
         "optional": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "chrono": "cpp",
+        "system_error": "cpp"
     }
 }
