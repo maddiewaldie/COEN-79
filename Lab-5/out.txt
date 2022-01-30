@@ -7,7 +7,7 @@ s1: A
 s1 length: 1
 s1: AB
 s1 length: 2
-s1: ABC
+s1: ABC
 s1 length: 3
 *** [] operator test ***
 s1[0]: A
@@ -53,10 +53,10 @@ s1: 2233445555
 s1: 22445555
 s1: 2244
 *** replace tests ***
-s1: abc
-s1: zbc
-s1: zyc
-s1: zyx
+s1: abc
+s1: zbc
+s1: zyc
+s1: zyx
 s1: 123DEFGHIJKLMNOP
 s1: 123DE123IJKLMNOP
 s1: 123DE123IJKLM123
@@ -75,7 +75,7 @@ First C: 3
 First D: 6
 First E: -1
 s1: ABCDEFGHIJKLMNOP
-Location of "ABC": -1
-Location of "GHI": -1
-Location of "NOP": -1
+Location of "ABC": 0
+Location of "GHI": 6
+Location of "NOP": 13
 Location of "XYZ": -1

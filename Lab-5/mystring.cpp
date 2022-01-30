@@ -169,7 +169,7 @@ namespace coen79_lab5
     }
 
     int string::search(const string& substring) const {
-        for(size_t i = 0; i <= length() - int(substring.length());i++){
+        /* for(size_t i = 0; i <= length() - int(substring.length());i++){
 			bool flag = true;
 			for(size_t j = 0;j< substring.length();i++){				//traverse the string and see if the first char matches the first char of the substring otherwise keep moving
 				if(characters[i+j] != substring.characters[j]){
@@ -180,7 +180,24 @@ namespace coen79_lab5
 			if(flag == true)
 				return i;
 		}
-		return -1;
+		return -1; */
+int i =0;
+        while (characters[i] != '\0') {
+            if (characters[i] == substring[0]) {
+                bool flag = true;
+                for (size_t j =0; j<substring.length(); j++) {
+                    if (characters[i+j] != substring[j]) {
+                        flag = false;
+                        j=substring.length();
+                    }
+                }
+                if (flag==true) {
+                    return i;
+                }
+            }
+            i++;
+        }
+        return -1;
     }
 
     unsigned int string::count(char c) const {
