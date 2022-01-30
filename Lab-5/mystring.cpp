@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <cstring>
 #include <cassert>
 #include "mystring.h"
 
@@ -17,7 +18,7 @@ using namespace coen79_lab5;
 namespace coen79_lab5
 {
     // CONSTRUCTOR, COPY CONSTRUCTOR, and DESTRUCTOR
-    string::string(const char str[ ] = "") {
+    string::string(const char str[ ]) {
         // The total number of characters prior to the null character is stored in current_length, which is always less than allocated
             // So, we can set the current length to the length of the string.
         current_length = strlen(str);
@@ -111,15 +112,15 @@ namespace coen79_lab5
 
     void string::insert(const string& source, unsigned int position) {
         assert(position <= length());
-        int i, j, s;
+        int i, j;
         string temp = source;
         //reserve(allocated);
-        for(i = position; i < current_length; i++) //add characters from position into temp
+        for(i = position; i < int(current_length); i++) //add characters from position into temp
         {
             temp += characters[i];
         }
         current_length += source.length();
-        for(j = 0; j < temp.length(); position++, j++) //add temp back into characters
+        for(j = 0; j < int(temp.length()); position++, j++) //add temp back into characters
         {
             characters[position] = temp[j];
         }
@@ -129,7 +130,7 @@ namespace coen79_lab5
     void string::dlt(unsigned int position, unsigned int num) {
         assert((position + num) <= length( ));
         int i;
-        for (i = position; i < current_length; i++)
+        for (i = position; i < int(current_length); i++)
         {
             characters[i] = characters[num + i]; //shift characters to the left
         }
@@ -146,7 +147,7 @@ namespace coen79_lab5
     void string::replace(const string& source, unsigned int position) {
         assert((position + source.length()) <= length());
         int i, j = 0;
-        for (i = position; i < (position + source.length()); i++, j++)
+        for (i = position; i < int((position + source.length())); i++, j++)
         {
             characters[i] = source[j];
         }
@@ -161,7 +162,7 @@ namespace coen79_lab5
 
     int string::search(char c) const {
         int i;
-        for (i = 0; i < current_length; i++)
+        for (i = 0; i < int(current_length); i++)
         {
             if (characters[i] == c) //if string contains c, returns index
                 return i;
@@ -170,9 +171,9 @@ namespace coen79_lab5
     }
 
     int string::search(const string& substring) const {
-        for(size_t i = 0; i <= length() - substring.length();i++){
+        for(size_t i = 0; i <= length() - int(substring.length());i++){
 			bool flag = true;
-			for(size_t j = 0;j<substring.length();i++){				//traverse the string and see if the first char matches the first char of the substring otherwise keep moving
+			for(size_t j = 0;j< substring.length();i++){				//traverse the string and see if the first char matches the first char of the substring otherwise keep moving
 				if(characters[i+j] != substring.characters[j]){
 					flag = false;
 					break;
@@ -187,7 +188,7 @@ namespace coen79_lab5
     unsigned int string::count(char c) const {
         int i;
         unsigned int count = 0;
-        for (i = 0; i < length(); i++)
+        for (i = 0; i < int(length()); i++)
         {
             if (c == characters[i])
                 count++;
