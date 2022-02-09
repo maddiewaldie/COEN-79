@@ -226,14 +226,14 @@ namespace coen79_lab6
 
 		node* temp_head = NULL;
 								//traverse to start pos
-		for(int i = 1; i < start; i++){
+		for(int i = 1; i < int(start); i++){
 			head_ptr =head_ptr->link();
 		}
 		list_head_insert(temp_head,head_ptr->data());
 		//std::cout << list_length(temp_head) << endl;
 		node* temp_trav = temp_head;
 								//copy and traverse to finish
-		for(int i = start + 1; i<=finish; i++){
+		for(int i = start + 1; i<=int(finish); i++){
 			head_ptr = head_ptr->link();
 			list_insert(temp_trav, head_ptr->data());
 			temp_trav = temp_trav->link();		
