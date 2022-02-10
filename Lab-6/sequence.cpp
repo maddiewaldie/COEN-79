@@ -187,29 +187,25 @@ namespace coen79_lab6
     }
 
     void sequence::operator =(const sequence& source) {
-        list_clear(this->head_ptr);	// must free old stuff before changine everything
-	    	
-	    	list_copy(source.head_ptr, head_ptr, tail_ptr); // memory leak
-	    	std::size_t loc;
-	    	node* myCursor;
-	    	many_nodes = source.many_nodes;
-	    	if(source.precursor == NULL){
-	    		precursor = NULL;
-	    		cursor = head_ptr;
-	    		if(tail_ptr){assert(tail_ptr->link() == NULL);}
-	    		return;
-	    	}
-	    	else
-	    	{
-	    		for(loc=1, myCursor = source.head_ptr; myCursor != source.precursor; ++loc, myCursor = myCursor->link()){
-	    			assert(myCursor != NULL);
-	    		}
-	    	
-	    		precursor = list_locate(head_ptr, loc);
-	    		cursor = precursor->link();
-	    		if(precursor){assert(precursor->link() == cursor);}
-	    		return;
-	    	}
+        //clean up existing data
+        list_clear(head_ptr);
+        //copy over new object
+        if(source.cursor == NULL){
+            list_copy(source.head_ptr, head_ptr,tail_ptr);
+            cursor = NULL;
+            precursor = NULL;
+        }
+        else if(source.cursor == source.head_ptr){
+            list_copy(source.head_ptr, head_ptr, tail_ptr);
+            precursor = NULL;
+            cursor = head_ptr;
+        }	
+        else{
+            list_piece(source.head_ptr, source.precursor, head_ptr, precursor);
+            list_piece(source.cursor, source.tail_ptr, cursor, tail_ptr);
+            precursor->set_link(cursor);	
+        }
+        many_nodes = source.size();
 
         // list_clear(head_ptr);
         // many_nodes = 0;
