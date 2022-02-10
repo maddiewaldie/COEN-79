@@ -53,25 +53,44 @@ namespace coen79_lab6
         *this = source;
     }
     sequence::~sequence() {
+        // Clear the list
         list_clear(head_ptr);
+        // And, set the number of nodes to 0
         many_nodes = 0;
     }
 
     // MODIFICATION MEMBER FUNCTIONS
     void sequence::start() {
+        // When we go to the start, the precursor and cursor get set to each other! (the first item in the sequence becomes the current item)
         precursor = head_ptr;
         cursor = head_ptr;
     }
 
     void sequence::end() {
+        // SPECIAL CASES:
+        // When we go to the end, the cursor is set to the tail_ptr
         cursor = tail_ptr;
-        if(many_nodes == 0)
-            cursor = precursor = NULL;
-        if(head_ptr == tail_ptr)
+
+        // In the case that there are 0 nodes, cursor and precursor are just NULL
+        if(many_nodes == 0) {
+            cursor = NULL;
             precursor = NULL;
+            return;
+        }
+
+        // Additionally, if the head_ptr is equal to the tail_ptr, we know there's only one element, so the precursor would be NULL
+        if(head_ptr == tail_ptr) {
+            precursor = NULL;
+            return;
+        }
+
+        // Set precursor to the first item in the list (so we can go from the beginning to cursor - 1)
         precursor = head_ptr;
-        while(precursor->link() != cursor)
-            precursor = precursor->link();
+
+        // Loop through the list and "increment" the precursor until it's one before the cursor
+        while((precursor -> link()) != cursor) {
+            precursor = precursor -> link();
+        }
     }
     void sequence::advance() {
         //std::cout << "advance1" << endl;
@@ -229,18 +248,25 @@ namespace coen79_lab6
 
     // CONSTANT MEMBER FUNCTIONS
     sequence::size_type sequence::size() const {
+        // Return the number of nodes in the sequence!
         return many_nodes;
     }
 
     bool sequence::is_item() const {
+        // Check whether or not the cursor is NULL
         if(cursor == NULL) {
-            return false;
+            return false; // If it is NULL, return false!
         }
+
+        // Otherwise, we know it's an item so we can return true!
         return true;
     }
     sequence::value_type sequence::current() const {
+        // First, check the precondition that the current spot is an item
         assert(is_item());
-        return cursor->data();
+
+        // If it is, we can return cursor -> data()
+        return cursor -> data();
     }
 
     
