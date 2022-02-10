@@ -48,31 +48,22 @@ namespace coen79_lab6
     {
         init();
     }
-    sequence::sequence(const sequence& source)
-    {
+    sequence::sequence(const sequence& source) {
         init();
         *this = source;
     }
-    sequence::~sequence()
-    {
+    sequence::~sequence() {
         list_clear(head_ptr);
         many_nodes = 0;
     }
 
     // MODIFICATION MEMBER FUNCTIONS
-    void sequence::start()
-//     Postcondition: The precursor and cursor are adjusted such that the first
-//     item in the sequence becomes the current item (but if the sequence is
-//     empty, then there is no current item).
-    {
+    void sequence::start() {
         precursor = head_ptr;
         cursor = head_ptr;
     }
-    void sequence::end()
-//     Postcondition: The precursor and cursor are adjusted such that the last
-//     item in the sequence becomes the current item (but if the sequence is
-//     empty, then there is no current item).
-    {
+
+    void sequence::end() {
         cursor = tail_ptr;
         if(many_nodes == 0)
             cursor = precursor = NULL;
@@ -82,12 +73,7 @@ namespace coen79_lab6
         while(precursor->link() != cursor)
             precursor = precursor->link();
     }
-    void sequence::advance()
-//     Precondition: is_item returns true.
-//     Postcondition: If the current item was already the last item in the
-//     sequence, then there is no longer any current item. Otherwise, the new
-//     current item is the item immediately after the original current item.
-    {
+    void sequence::advance() {
         //std::cout << "advance1" << endl;
         assert(is_item());
         
@@ -101,12 +87,7 @@ namespace coen79_lab6
         cursor = cursor->link();
     }
 
-    void sequence::insert(const value_type& entry)
-//     Postcondition: A new copy of entry has been inserted in the sequence
-//     before the current item. If there was no current item, then the new entry
-//     has been inserted at the front of the sequence. In either case, the newly
-//     inserted item is now the current item of the sequence.
-    {
+    void sequence::insert(const value_type& entry) {
         if(head_ptr == NULL)
         {
             list_head_insert(head_ptr, entry);
@@ -137,12 +118,7 @@ namespace coen79_lab6
             many_nodes++;
         }
     }
-    void sequence::attach(const value_type& entry)
-//     Postcondition: A new copy of entry has been inserted in the sequence after
-//     the current item. If there was no current item, then the new entry has
-//     been attached to the end of the sequence. In either case, the newly
-//     inserted item is now the current item of the sequence.
-    {
+    void sequence::attach(const value_type& entry) {
         if(head_ptr == NULL)
         {
             list_head_insert(head_ptr, entry);
@@ -189,8 +165,8 @@ namespace coen79_lab6
             many_nodes++;
         }
     }
-    void sequence::operator =(const sequence& source)
-    {
+
+    void sequence::operator =(const sequence& source) {
         list_clear(head_ptr);
         many_nodes = 0;
         node* tail;
@@ -219,11 +195,7 @@ namespace coen79_lab6
         many_nodes = source.many_nodes;
     }
 
-    void sequence::remove_current()
-//     Precondition: is_item returns true.
-//     Postcondition: The current item has been removed from the sequence, and
-//     the item after this (if there is one) is now the new current item.
-    {
+    void sequence::remove_current() {
         assert(is_item());
         if(head_ptr->link() == NULL)
         {
@@ -256,16 +228,17 @@ namespace coen79_lab6
     }
 
     // CONSTANT MEMBER FUNCTIONS
-    sequence::size_type sequence::size() const
-    {
+    sequence::size_type sequence::size() const {
         return many_nodes;
     }
-    bool sequence::is_item() const
-    {
-        return (cursor != NULL);
+
+    bool sequence::is_item() const {
+        if(cursor == NULL) {
+            return false;
+        }
+        return true;
     }
-    sequence::value_type sequence::current() const
-    {
+    sequence::value_type sequence::current() const {
         assert(is_item());
         return cursor->data();
     }
