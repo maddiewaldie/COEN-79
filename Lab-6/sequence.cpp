@@ -88,74 +88,82 @@ namespace coen79_lab6
     }
 
     void sequence::insert(const value_type& entry) {
-        if(cursor == NULL){
+        if(head_ptr == NULL)
+        {
             list_head_insert(head_ptr, entry);
             cursor = head_ptr;
             precursor = NULL;
             tail_ptr = head_ptr;
+            many_nodes++;
         }
-        else if(precursor == NULL){
-            list_head_insert(head_ptr,entry);
+        else if(is_item() && cursor == head_ptr)
+        {
+            list_head_insert(head_ptr, entry);
             cursor = head_ptr;
             precursor = NULL;
+            many_nodes++;
         }
-        else{
+        else if(is_item() && cursor != head_ptr)
+        {
             list_insert(precursor, entry);
             cursor = precursor->link();
+            many_nodes++;
         }
-        many_nodes++;
-
-        // if(head_ptr == NULL)
-        // {
-        //     list_head_insert(head_ptr, entry);
-        //     cursor = head_ptr;
-        //     precursor = NULL;
-        //     tail_ptr = head_ptr;
-        //     many_nodes++;
-        // }
-        // else if(is_item() && cursor == head_ptr)
-        // {
-        //     list_head_insert(head_ptr, entry);
-        //     cursor = head_ptr;
-        //     precursor = NULL;
-        //     many_nodes++;
-        // }
-        // else if(is_item() && cursor != head_ptr)
-        // {
-        //     list_insert(precursor, entry);
-        //     cursor = precursor->link();
-        //     many_nodes++;
-        // }
-        // else if (!is_item())
-        // {
-        //     list_head_insert(head_ptr, entry);
-        //     tail_ptr = precursor->link();
-        //     cursor = head_ptr;
-        //     precursor = NULL;
-        //     many_nodes++;
-        // }
-    }
-    void sequence::attach(const value_type& entry) {
-        if(head_ptr == NULL){
+        else if (!is_item())
+        {
             list_head_insert(head_ptr, entry);
+            tail_ptr = precursor->link();
             cursor = head_ptr;
             precursor = NULL;
+            many_nodes++;
+        }
+    }
+    void sequence::attach(const value_type& entry) {
+        if(head_ptr == NULL)
+        {
+            list_head_insert(head_ptr, entry);
+            precursor = NULL;
+            cursor = head_ptr;
             tail_ptr = head_ptr;
+            many_nodes++;
         }
-        else if(cursor == NULL){
-            list_insert(tail_ptr, entry);
-            cursor = tail_ptr->link();
-            precursor = tail_ptr;
-            tail_ptr = cursor;	
+        else if(is_item() && many_nodes == 1)
+        {
+            list_insert(head_ptr, entry);
+            precursor = head_ptr;
+            tail_ptr = precursor->link();
+            cursor = tail_ptr;
+            many_nodes++;
         }
-        else{
+        else if(is_item() && cursor == head_ptr)
+        {
+            list_insert(head_ptr, entry);
+            precursor = head_ptr;
+            cursor = precursor->link();
+            many_nodes++;
+        }
+        else if(is_item() && cursor != head_ptr && cursor != tail_ptr)
+        {
             list_insert(cursor, entry);
-            precursor = cursor;
-            cursor = cursor->link();
-            if(cursor->link() == NULL)
-                tail_ptr = cursor;		
+            advance();
+            many_nodes++;
         }
-        many_nodes++;
+        else if (is_item() && cursor != head_ptr)
+        {
+            list_insert(tail_ptr, entry);
+            tail_ptr = cursor->link();
+            precursor = cursor;
+            cursor = tail_ptr;
+            many_nodes++;
+        }
+        else //if(!is_item())
+        {
+            list_insert(tail_ptr, entry);
+            precursor = tail_ptr;
+            cursor = precursor->link();
+            tail_ptr = cursor;
+            many_nodes++;
+        }
     }
 
     void sequence::operator =(const sequence& source) {
