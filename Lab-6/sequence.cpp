@@ -187,26 +187,37 @@ namespace coen79_lab6
     }
 
     void sequence::operator =(const sequence& source) {
-        //clean up existing data
+        // If assigning same to same
+        if (this == &source) {
+            return;
+        }
+        // Clearing out current sequence
+        many_nodes = 0;
         list_clear(head_ptr);
-        //copy over new object
-        if(source.cursor == NULL){
-            list_copy(source.head_ptr, head_ptr,tail_ptr);
+        node* tail_t;
+        // Copy
+        list_copy(source.head_ptr, head_ptr, tail_t);
+        cursor = head_ptr;
+        tail_ptr = tail_t;
+        precursor = head_ptr;
+        node *temp = source.head_ptr;
+        // If cursor doesn't point to anything
+        if (source.cursor == NULL) {
+            precursor = tail_ptr;
             cursor = NULL;
-            precursor = NULL;
         }
-        else if(source.cursor == source.head_ptr){
-            list_copy(source.head_ptr, head_ptr, tail_ptr);
-            precursor = NULL;
-            cursor = head_ptr;
-        }	
-        else{
-            list_piece(source.head_ptr, source.precursor, head_ptr, precursor);
-            list_piece(source.cursor, source.tail_ptr, cursor, tail_ptr);
-            precursor->set_link(cursor);	
+        else {
+            // Moves precursor to right place if cursor does point to something
+            while (temp != source.precursor) {
+                precursor = precursor->link();
+                temp = temp->link();
+            }
+            // Moves cursor accordingly
+            if (precursor != NULL) {
+                cursor = precursor->link();
+            }
         }
-        many_nodes = source.size();
-
+        many_nodes = source.many_nodes;
         // list_clear(head_ptr);
         // many_nodes = 0;
         // node* tail;
