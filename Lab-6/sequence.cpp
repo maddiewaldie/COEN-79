@@ -119,51 +119,72 @@ namespace coen79_lab6
         }
     }
     void sequence::attach(const value_type& entry) {
-        if(head_ptr == NULL)
-        {
-            list_head_insert(head_ptr, entry);
-            precursor = NULL;
-            cursor = head_ptr;
-            tail_ptr = head_ptr;
-            many_nodes++;
-        }
-        else if(is_item() && many_nodes == 1)
-        {
-            list_insert(head_ptr, entry);
-            precursor = head_ptr;
-            tail_ptr = precursor->link();
-            cursor = tail_ptr;
-            many_nodes++;
-        }
-        else if(is_item() && cursor == head_ptr)
-        {
-            list_insert(head_ptr, entry);
-            precursor = head_ptr;
-            cursor = precursor->link();
-            many_nodes++;
-        }
-        else if(is_item() && cursor != head_ptr && cursor != tail_ptr)
-        {
-            list_insert(cursor, entry);
-            advance();
-            many_nodes++;
-        }
-        else if (is_item() && cursor != head_ptr)
-        {
-            list_insert(tail_ptr, entry);
-            tail_ptr = cursor->link();
-            precursor = cursor;
-            cursor = tail_ptr;
-            many_nodes++;
-        }
-        else //if(!is_item())
-        {
-            list_insert(tail_ptr, entry);
-            precursor = tail_ptr;
-            cursor = precursor->link();
-            tail_ptr = cursor;
-            many_nodes++;
-        }
+        // if(head_ptr == NULL)
+        // {
+        //     list_head_insert(head_ptr, entry);
+        //     precursor = NULL;
+        //     cursor = head_ptr;
+        //     tail_ptr = head_ptr;
+        //     many_nodes++;
+        // }
+        // else if(is_item() && many_nodes == 1)
+        // {
+        //     list_insert(head_ptr, entry);
+        //     precursor = head_ptr;
+        //     tail_ptr = precursor->link();
+        //     cursor = tail_ptr;
+        //     many_nodes++;
+        // }
+        // else if(is_item() && cursor == head_ptr)
+        // {
+        //     list_insert(head_ptr, entry);
+        //     precursor = head_ptr;
+        //     cursor = precursor->link();
+        //     many_nodes++;
+        // }
+        // else if(is_item() && cursor != head_ptr && cursor != tail_ptr)
+        // {
+        //     list_insert(cursor, entry);
+        //     advance();
+        //     many_nodes++;
+        // }
+        // else if (is_item() && cursor != head_ptr)
+        // {
+        //     list_insert(tail_ptr, entry);
+        //     tail_ptr = cursor->link();
+        //     precursor = cursor;
+        //     cursor = tail_ptr;
+        //     many_nodes++;
+        // }
+        // else //if(!is_item())
+        // {
+        //     list_insert(tail_ptr, entry);
+        //     precursor = tail_ptr;
+        //     cursor = precursor->link();
+        //     tail_ptr = cursor;
+        //     many_nodes++;
+        // }
+
+        if(head_ptr == NULL){
+				list_head_insert(head_ptr, entry);
+				cursor = head_ptr;
+				precursor = NULL;
+				tail_ptr = head_ptr;
+			}
+			else if(cursor == NULL){
+				list_insert(tail_ptr, entry);
+				cursor = tail_ptr->link();
+				precursor = tail_ptr;
+				tail_ptr = cursor;	
+			}
+			else{
+				list_insert(cursor, entry);
+				precursor = cursor;
+				cursor = cursor->link();
+				if(cursor->link() == NULL)
+					tail_ptr = cursor;		
+			}
+			many_nodes++;
     }
 
     void sequence::operator =(const sequence& source) {
