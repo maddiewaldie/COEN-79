@@ -267,7 +267,7 @@ namespace coen79_lab6
 		node* copyList = NULL;
 
 		// Go through the list to the start position
-		for(int i = 1; i < int(start); i++) {
+		for(size_t i = 1; i < start; i++) {
 			head_ptr = head_ptr -> link();
 		}
 
@@ -278,7 +278,7 @@ namespace coen79_lab6
 		node* temp = copyList;
 		
 		// Loop through from start to finish
-		for(int i = start + 1; i <= int(finish); i++) {
+		for(size_t i = start + 1; i <= finish; i++) {
 			head_ptr = head_ptr -> link();
 			list_insert(temp, head_ptr -> data());
 			temp = temp -> link();		
