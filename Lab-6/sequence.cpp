@@ -93,17 +93,18 @@ namespace coen79_lab6
         }
     }
     void sequence::advance() {
-        //std::cout << "advance1" << endl;
+        // First, check the precondition that is_item is true
         assert(is_item());
         
-        if (cursor == tail_ptr)
-        {
+        // If cursor's at the end, we know the next element would be NULL
+        if (cursor == tail_ptr) {
             cursor = NULL;
             return;
         }
         
+        // Set the precursor to the cursor & increment the cursor
         precursor = cursor;
-        cursor = cursor->link();
+        cursor = cursor -> link();
     }
 
     void sequence::insert(const value_type& entry) {
@@ -186,32 +187,56 @@ namespace coen79_lab6
     }
 
     void sequence::operator =(const sequence& source) {
-        list_clear(head_ptr);
-        many_nodes = 0;
-        node* tail;
-        list_copy(source.head_ptr, head_ptr,tail);
-        tail_ptr = tail;
-        cursor = head_ptr;
+        list_clear(this->head_ptr);	// must free old stuff before changine everything
+	    	
+	    	list_copy(source.head_ptr, head_ptr, tail_ptr); // memory leak
+	    	std::size_t loc;
+	    	node* myCursor;
+	    	many_nodes = source.many_nodes;
+	    	if(source.precursor == NULL){
+	    		precursor = NULL;
+	    		cursor = head_ptr;
+	    		if(tail_ptr){assert(tail_ptr->link() == NULL);}
+	    		return;
+	    	}
+	    	else
+	    	{
+	    		for(loc=1, myCursor = source.head_ptr; myCursor != source.precursor; ++loc, myCursor = myCursor->link()){
+	    			assert(myCursor != NULL);
+	    		}
+	    	
+	    		precursor = list_locate(head_ptr, loc);
+	    		cursor = precursor->link();
+	    		if(precursor){assert(precursor->link() == cursor);}
+	    		return;
+	    	}
+
+        // list_clear(head_ptr);
+        // many_nodes = 0;
+        // node* tail;
+        // list_copy(source.head_ptr, head_ptr,tail);
+        // tail_ptr = tail;
+        // cursor = head_ptr;
         
-        node* head = source.head_ptr;
-        precursor = head_ptr;
+        // node* head = source.head_ptr;
+        // precursor = head_ptr;
     
-        if(source.cursor == NULL)
-        {
-            cursor = NULL;
-            precursor = tail_ptr;
-        }
-        else if(precursor != NULL)
-            cursor = precursor->link();
-        else
-        {
-            while(head != source.precursor)
-            {
-                head = head->link();
-                precursor = precursor->link();
-            }
-        }
-        many_nodes = source.many_nodes;
+        // if(source.cursor == NULL)
+        // {
+        //     cursor = NULL;
+        //     precursor = tail_ptr;
+        // }
+        // else if(precursor != NULL)
+        //     cursor = precursor->link();
+        // else
+        // {
+        //     while(head != source.precursor)
+        //     {
+        //         head = head->link();
+        //         precursor = precursor->link();
+        //     }
+        // }
+        // many_nodes = source.many_nodes;
     }
 
     void sequence::remove_current() {
