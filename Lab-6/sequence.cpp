@@ -39,22 +39,28 @@ namespace coen79_lab6
         tail_ptr = NULL;
         cursor = NULL;
         precursor = NULL;
-        //Initializiing many_nodes (or our counter) to 0
+
+        //Initializing many_nodes (or our counter) to 0
         many_nodes = 0;
     }
 
     // CONSTRUCTORS and DESTRUCTOR
     sequence::sequence()
     {
+        // Initialize the pointers / variables for the sequence
         init();
     }
     sequence::sequence(const sequence& source) {
+        // Initialize the pointers / variables for the sequence
         init();
+
+        // Set this sequence to the provided sequence
         *this = source;
     }
     sequence::~sequence() {
         // Clear the list
         list_clear(head_ptr);
+
         // And, set the number of nodes to 0
         many_nodes = 0;
     }
@@ -67,7 +73,6 @@ namespace coen79_lab6
     }
 
     void sequence::end() {
-        // SPECIAL CASES:
         // When we go to the end, the cursor is set to the tail_ptr
         cursor = tail_ptr;
 
@@ -108,174 +113,196 @@ namespace coen79_lab6
     }
 
     void sequence::insert(const value_type& entry) {
-        if(head_ptr == NULL)
-        {
+        // We can break this into a few different cases!
+
+        // If the sequence is empty
+        if(head_ptr == NULL) {
+            // Add the element to the sequence
             list_head_insert(head_ptr, entry);
+            // Update the tail, cursor, and precursor
             cursor = head_ptr;
             precursor = NULL;
             tail_ptr = head_ptr;
-            many_nodes++;
         }
-        else if(is_item() && cursor == head_ptr)
-        {
+        else if(is_item() && (cursor == head_ptr)) {
+            // Add the element to the sequence
             list_head_insert(head_ptr, entry);
+            // Update the cursor and precursor
             cursor = head_ptr;
             precursor = NULL;
-            many_nodes++;
         }
-        else if(is_item() && cursor != head_ptr)
-        {
+        else if(is_item() && (cursor != head_ptr)) {
+            // Add the element to the sequence
             list_insert(precursor, entry);
+            // Update the cursor
             cursor = precursor->link();
-            many_nodes++;
         }
-        else if (!is_item())
-        {
+        else if (!is_item()) {
+            // Add the element to the sequence
             list_head_insert(head_ptr, entry);
+            // Update the tail, cursor, and precursor
             tail_ptr = precursor->link();
             cursor = head_ptr;
             precursor = NULL;
-            many_nodes++;
         }
+        // Increment the number of nodes in the sequence
+        many_nodes++;
     }
     void sequence::attach(const value_type& entry) {
-        if(head_ptr == NULL)
-        {
+        // We can split this into 6 different cases!
+
+        // First, if the list is empty
+        if(head_ptr == NULL) {
+            // Add the element to the sequence
             list_head_insert(head_ptr, entry);
+            // Set the precursor to NULL (there isn't any other element to point to)
             precursor = NULL;
+            // And, the cursor and tail will also have to equal the head
             cursor = head_ptr;
             tail_ptr = head_ptr;
-            many_nodes++;
         }
-        else if(is_item() && many_nodes == 1)
-        {
+        // If there's only one node in the sequence
+        else if((is_item()) && (many_nodes == 1)) {
+            // Add the element to the sequence
             list_insert(head_ptr, entry);
+            // Set the precursor, tail, and cursor
             precursor = head_ptr;
-            tail_ptr = precursor->link();
+            tail_ptr = precursor -> link();
             cursor = tail_ptr;
-            many_nodes++;
         }
-        else if(is_item() && cursor == head_ptr)
-        {
+        // If the cursor is equal to the head pointer
+        else if((is_item()) && (cursor == head_ptr)) {
+            // Add the element to the sequence
             list_insert(head_ptr, entry);
+            // Set the precursor and cursor
             precursor = head_ptr;
-            cursor = precursor->link();
-            many_nodes++;
+            cursor = precursor -> link();
         }
-        else if(is_item() && cursor != head_ptr && cursor != tail_ptr)
-        {
+        // If the item isn't the head or tail
+        else if((is_item()) && (cursor != head_ptr) && (cursor != tail_ptr)) {
+            // Add the element to the sequence
             list_insert(cursor, entry);
             advance();
-            many_nodes++;
         }
-        else if (is_item() && cursor != head_ptr)
-        {
+        // If the item isn't the head
+        else if (is_item() && cursor != head_ptr) {
+            // Add the element to the sequence
             list_insert(tail_ptr, entry);
-            tail_ptr = cursor->link();
+            // Set the precursor, tail, and cursor
+            tail_ptr = cursor -> link();
             precursor = cursor;
             cursor = tail_ptr;
-            many_nodes++;
         }
-        else //if(!is_item())
-        {
+        else { // If it isn't the item!
+        // Add the element to the sequence
             list_insert(tail_ptr, entry);
+            // Set the precursor, tail, and cursor
             precursor = tail_ptr;
-            cursor = precursor->link();
+            cursor = precursor -> link();
             tail_ptr = cursor;
-            many_nodes++;
         }
+        
+        // Increment the number of nodes in the sequence
+        many_nodes++;
     }
 
     void sequence::operator =(const sequence& source) {
-        // If assigning same to same
+        // If the source is the same as the object, we can just return (there's nothing more to do!!)
         if (this == &source) {
             return;
         }
-        // Clearing out current sequence
+
+        // Reset this sequence, getting ready to copy over the new sequence
         many_nodes = 0;
         list_clear(head_ptr);
-        node* tail_t;
-        // Copy
-        list_copy(source.head_ptr, head_ptr, tail_t);
+
+        // Make a pointer, which will hold the tail of the copy
+        node* newTail;
+
+        // Copy over the provided sequence to this sequence
+        list_copy(source.head_ptr, head_ptr, newTail);
+
+        // Set the cursor and precursor to generic locations, which will be adjusted below
         cursor = head_ptr;
-        tail_ptr = tail_t;
+        tail_ptr = newTail;
         precursor = head_ptr;
-        node *temp = source.head_ptr;
-        // If cursor doesn't point to anything
+
+        // Create a temporary pointer to keep track of location in while loop below
+        node *tempPtr = source.head_ptr;
+
+        // If the given sequence's cursor is NULL, we can set this cursor to NULL, and we know the precursor will have to be the tail
         if (source.cursor == NULL) {
             precursor = tail_ptr;
             cursor = NULL;
         }
+        // Loop through and make sure the cursor and precursor are in the right location!
         else {
-            // Moves precursor to right place if cursor does point to something
-            while (temp != source.precursor) {
-                precursor = precursor->link();
-                temp = temp->link();
+            // Move the precursor over until it's in the right place
+            while (tempPtr != source.precursor) {
+                precursor = precursor -> link();
+                tempPtr = tempPtr -> link();
             }
-            // Moves cursor accordingly
+            // Move the cursor over to the correct place
             if (precursor != NULL) {
-                cursor = precursor->link();
+                cursor = precursor -> link();
             }
         }
+
+        // Set the number of nodes to the number of nodes in the given sequence
         many_nodes = source.many_nodes;
-        // list_clear(head_ptr);
-        // many_nodes = 0;
-        // node* tail;
-        // list_copy(source.head_ptr, head_ptr,tail);
-        // tail_ptr = tail;
-        // cursor = head_ptr;
-        
-        // node* head = source.head_ptr;
-        // precursor = head_ptr;
-    
-        // if(source.cursor == NULL)
-        // {
-        //     cursor = NULL;
-        //     precursor = tail_ptr;
-        // }
-        // else if(precursor != NULL)
-        //     cursor = precursor->link();
-        // else
-        // {
-        //     while(head != source.precursor)
-        //     {
-        //         head = head->link();
-        //         precursor = precursor->link();
-        //     }
-        // }
-        // many_nodes = source.many_nodes;
     }
 
     void sequence::remove_current() {
+        // First, check the precondition that is_item is true
         assert(is_item());
-        if(head_ptr->link() == NULL)
+
+        // We can split this into four different cases!
+
+        // If we're deleting an item from a one item sequence
+        if((head_ptr -> link()) == NULL)
         {
+            // Delete the element
             delete cursor;
-            head_ptr = tail_ptr = precursor = cursor = NULL;
-            many_nodes--;
-        }
-        else if(cursor == head_ptr && head_ptr ->link() !=NULL)
-        {
-            cursor = head_ptr->link();
-            list_head_remove(head_ptr);
+            // All the pointers will need to point to NULL
+            head_ptr = NULL;
+            tail_ptr = NULL;
             precursor = NULL;
-            many_nodes--;
+            cursor = NULL;
         }
-        else if(cursor != tail_ptr && cursor != head_ptr)
+        // If the cursor is the head pointer, and there IS a next element in the sequence
+        else if((cursor == head_ptr) && (head_ptr -> link() != NULL))
         {
-            precursor->set_link(cursor->link());
+            // Set the new cursor to be the next item in the sequence
+            cursor = head_ptr -> link();
+            // Remove the head_ptr
+            list_head_remove(head_ptr);
+            // Because it's at the beginning of the sequence, the precursor is just NULL
+            precursor = NULL;
+        }
+        // If the cursor isn't at the beginning or end of the sequence
+        else if((cursor != tail_ptr) && (cursor != head_ptr))
+        {
+            // Set the new precursor
+            precursor -> set_link(cursor -> link());
+            // Delete the current cursor
             delete cursor;
-            cursor = precursor->link();
-            many_nodes--;
+            // Update the cursor to be the element next to the precursor
+            cursor = precursor -> link();
         }
-        else if (cursor == tail_ptr && many_nodes > 1)
+        // If the cursor is at the end of the sequence, and there are multiple nodes in the sequence
+        else if ((cursor == tail_ptr) && (many_nodes > 1))
         {
+            // Set the new tail to the precursor (which will be the current second to last element)
             tail_ptr = precursor;
-            tail_ptr->set_link(NULL);
+            // Set the tail pointer to NULL
+            tail_ptr -> set_link(NULL);
+            // Delete the cursor & set it to NULL
             delete cursor;
             cursor = NULL;
-            many_nodes--;
         }
+
+        // Decrement the number of nodes, as we removed an element from the sequence
+        many_nodes--;
     }
 
     // CONSTANT MEMBER FUNCTIONS
@@ -293,6 +320,7 @@ namespace coen79_lab6
         // Otherwise, we know it's an item so we can return true!
         return true;
     }
+
     sequence::value_type sequence::current() const {
         // First, check the precondition that the current spot is an item
         assert(is_item());
@@ -300,6 +328,4 @@ namespace coen79_lab6
         // If it is, we can return cursor -> data()
         return cursor -> data();
     }
-
-    
 }
