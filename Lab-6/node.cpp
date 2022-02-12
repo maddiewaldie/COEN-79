@@ -310,7 +310,6 @@ namespace coen79_lab6
     void list_remove_dups(node* head_ptr) {
 		node* c1;
         node* c2;
-        size_t i;
         c1 = head_ptr;
         while (c1 != NULL && c1->link() != NULL)
         {

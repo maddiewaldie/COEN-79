@@ -45,7 +45,7 @@ Removing 3.5 from the middle:
 
  *** list_remove_dups tests *** 
 1, 1, 1, 1
-1, 1, 1, 1
+1
 
  *** list_detect_loop tests *** 
 Loop start location is: 5
