@@ -308,31 +308,48 @@ namespace coen79_lab6
 	}
 
     void list_remove_dups(node* head_ptr) {
-		// If the list is empty, we don't need to do anything!
-		if((head_ptr -> link()) == NULL) {
-			return;
-		}
+		node* c1;
+        node* c2;
+        size_t i;
+        c1 = head_ptr;
+        while (c1 != NULL && c1->link() != NULL)
+        {
+            c2 = c1;
+            while (c2->link() != NULL)
+            {
+                if (c1->data() == c2->link()->data())
+                    list_remove(c2);
+                else
+                    c2=c2->link();
+            }
+        }
+        c1=c1->link();
+
+		// // If the list is empty, we don't need to do anything!
+		// if((head_ptr -> link()) == NULL) {
+		// 	return;
+		// }
 		
-		// Go through the list
-		while(head_ptr != NULL) {
-			// Figure out how many occurrences of data
-			int numOccurrences = (list_occurrences(head_ptr, head_ptr -> data()));
+		// // Go through the list
+		// while(head_ptr != NULL) {
+		// 	// Figure out how many occurrences of data
+		// 	int numOccurrences = (list_occurrences(head_ptr, head_ptr -> data()));
 
-			// If there are multiple occurrences, there are duplicates that need removed!
-			while (numOccurrences > 1) {
-				// Figure out which object to delete
-				node* objToDelete = list_search(head_ptr -> link(), head_ptr -> data());
-				node* cursor;
-				for(cursor = head_ptr; cursor -> link() != objToDelete; cursor = cursor -> link()) {
-					list_remove(cursor);
-				}
+		// 	// If there are multiple occurrences, there are duplicates that need removed!
+		// 	while (numOccurrences > 1) {
+		// 		// Figure out which object to delete
+		// 		node* objToDelete = list_search(head_ptr -> link(), head_ptr -> data());
+		// 		node* cursor;
+		// 		for(cursor = head_ptr; cursor -> link() != objToDelete; cursor = cursor -> link()) {
+		// 			list_remove(cursor);
+		// 		}
 					
-				// Decrement the number of occurrences
-				numOccurrences--;
-			}
+		// 		// Decrement the number of occurrences
+		// 		numOccurrences--;
+		// 	}
 
-			head_ptr = head_ptr -> link();			
-		}
+		// 	head_ptr = head_ptr -> link();			
+		// }
 	}
 
     node* list_detect_loop (node* head_ptr) {

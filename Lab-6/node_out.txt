@@ -42,3 +42,11 @@ Removing last item:
 	1, 1.5, 2, 2, 2, 2, 2.5, 3, 3.5, 4, 4.5
 Removing 3.5 from the middle:
 	1, 1.5, 2, 2, 2, 2, 2.5, 3, 4, 4.5
+
+ *** list_remove_dups tests *** 
+1, 1, 1, 1
+1
+
+ *** list_detect_loop tests *** 
+the pointers met!
+Loop start location is: 5
