@@ -308,47 +308,29 @@ namespace coen79_lab6
 	}
 
     void list_remove_dups(node* head_ptr) {
-		node* c1;
-        node* c2;
-        c1 = head_ptr;
-        while (c1 != NULL && c1->link() != NULL)
-        {
-            c2 = c1;
-            while (c2->link() != NULL)
-            {
-                if (c1->data() == c2->link()->data())
-                    list_remove(c2);
-                else
-                    c2=c2->link();
+		// Create two pointers, which will assist in comparing the elements to find duplicates
+		node* comparePtr1;
+        node* comparePtr2;
+		// Start comparePtr1 at the head of the list
+        comparePtr1 = head_ptr;
+		// Traverse all the elements in the list & compare them to all the other elements in the list
+        while ((comparePtr1 != NULL) && (comparePtr1->link() != NULL)) {
+			// Each time we assign comparePtr2, we can just assign it to comparePtr1, as it doesn't have to re-compare with the earlier elements
+            comparePtr2 = comparePtr1;
+            while (comparePtr2 -> link() != NULL) {
+				// If the elements are duplicates
+                if ((comparePtr1 -> data()) == (comparePtr2 -> link() -> data())) {
+					// Then we need to remove the duplicate!
+					list_remove(comparePtr2);
+				}
+                else {
+					// Otherwise, move to the next element
+					comparePtr2 = comparePtr2 -> link();
+				}
             }
         }
-        c1=c1->link();
-
-		// // If the list is empty, we don't need to do anything!
-		// if((head_ptr -> link()) == NULL) {
-		// 	return;
-		// }
 		
-		// // Go through the list
-		// while(head_ptr != NULL) {
-		// 	// Figure out how many occurrences of data
-		// 	int numOccurrences = (list_occurrences(head_ptr, head_ptr -> data()));
-
-		// 	// If there are multiple occurrences, there are duplicates that need removed!
-		// 	while (numOccurrences > 1) {
-		// 		// Figure out which object to delete
-		// 		node* objToDelete = list_search(head_ptr -> link(), head_ptr -> data());
-		// 		node* cursor;
-		// 		for(cursor = head_ptr; cursor -> link() != objToDelete; cursor = cursor -> link()) {
-		// 			list_remove(cursor);
-		// 		}
-					
-		// 		// Decrement the number of occurrences
-		// 		numOccurrences--;
-		// 	}
-
-		// 	head_ptr = head_ptr -> link();			
-		// }
+        comparePtr1 = comparePtr1 -> link();
 	}
 
     node* list_detect_loop (node* head_ptr) {
