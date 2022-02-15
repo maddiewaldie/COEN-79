@@ -96,7 +96,7 @@ namespace coen79_lab7
         size_type pos = search_company(entry);
         
         // If you find a company that is false, because there are duplicates
-        if (pos != COMPANY_NOT_FOUND) {
+        if (int(pos) != COMPANY_NOT_FOUND) {
             return false;
         }
 
@@ -129,11 +129,11 @@ namespace coen79_lab7
         size_type company_index = search_company(company);
         
         // COMPLETE THE IMPLEMENTATION...
-        if (company_index == COMPANY_NOT_FOUND) {
+        if (int(company_index) == COMPANY_NOT_FOUND) {
             return false;
         }
         else {
-            for (int i = company_index+1; i < used_slots; i++)
+            for (int i = int(company_index)+1; i < int(used_slots); i++)
                 company_array[i-1]=company_array[i]; //shift everything in array
             used_slots--;
             return true;
@@ -148,7 +148,7 @@ namespace coen79_lab7
         // COMPLETE THE IMPLEMENTATION...
         size_type c_index = search_company(cName);
         
-        if (c_index == COMPANY_NOT_FOUND)
+        if (int(c_index) == COMPANY_NOT_FOUND)
             return false;
         else
         {
@@ -163,7 +163,7 @@ namespace coen79_lab7
         assert(company.length() > 0);
 
         // COMPLETE THE IMPLEMENTATION...
-        for (int i = 0; i < used_slots; i++) {
+        for (int i = 0; i < int(used_slots); i++) {
             if(company == company_array[i].get_name()) {
                 return i;
                 break;
@@ -178,7 +178,7 @@ namespace coen79_lab7
 
         size_type c_index = search_company(cName);
         
-        if (c_index == COMPANY_NOT_FOUND) {
+        if (int(c_index) == COMPANY_NOT_FOUND) {
             return false;
         }
         
@@ -193,7 +193,7 @@ namespace coen79_lab7
     void database::print_companies() {
         
         std::cout << "Company List" << std::endl;
-        for (int i = 0; i < used_slots; i++) {
+        for (int i = 0; i < int(used_slots); i++) {
             std::cout << "- " << company_array[i].get_name() << std::endl;
         }
     }

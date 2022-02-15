@@ -3,6 +3,7 @@
 #define ITEM_CPP
 
 #include "node.h"
+#include <cassert> 
 
 namespace coen79_lab7
 {
