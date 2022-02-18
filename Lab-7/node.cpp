@@ -90,7 +90,7 @@ namespace coen79_lab7
         node *remove_ptr;
         
         remove_ptr = head;
-        head = head->getLink( );
+        head = head -> getLink( );
         delete remove_ptr;
     }
     

@@ -38,8 +38,12 @@ namespace coen79_lab7
         Debug("Copy constructor..." << std::endl);
 
         // COMPLETE THE IMPLEMENTATION...
+
+        // Set this object's variables to the given object's variables
         aloc_slots = src.aloc_slots;
         used_slots = src.used_slots;
+
+        // Set this object's company array to the given object's one
         company_array = new company[aloc_slots];
         *company_array = *src.company_array;
     }
@@ -49,12 +53,18 @@ namespace coen79_lab7
         Debug("Assignment operator..." << std::endl);
 
         // COMPLETE THE IMPLEMENTATION...
+
+        // If this object equals the given object, we don't need to do anything
         if(this == &rhs) {
+            // So, we can simply return this object!
             return *this;
         }
+        // Get rid of the current company array, and then copy over the given company array into a new one
         delete [] company_array;
         company_array = new company[rhs.aloc_slots];
         std::copy(rhs.company_array, rhs.company_array + rhs.used_slots, company_array);
+
+        // Set this object's variables to the given object's variables
         used_slots = rhs.used_slots;
         aloc_slots = rhs.aloc_slots;
         return *this;
@@ -63,6 +73,8 @@ namespace coen79_lab7
     
     database::~database() {
         // COMPLETE THE IMPLEMENTATION...
+
+        // Deallocate the memory & reset the variables to 0
         delete [] company_array;
         aloc_slots = 0;
         used_slots = 0;
@@ -79,10 +91,15 @@ namespace coen79_lab7
             new_capacity = used_slots; // Canít allocate less than we are using.
         
         // COMPLETE THE IMPLEMENTATION...
-        company* newC = new company[new_capacity];
-        std::copy(company_array, company_array + used_slots, newC);
+        // In a temporary variable, change the database's current capacity to the new_capacity
+        company* temp = new company[new_capacity];
+        // Copy over the elements
+        std::copy(company_array, company_array + used_slots, temp);
+        // Get rid of the current array
         delete[] company_array;
-        company_array = newC;
+        
+        // Set the company_array to the temp array
+        company_array = temp;
         aloc_slots = new_capacity;
     }
     
@@ -129,12 +146,14 @@ namespace coen79_lab7
         size_type company_index = search_company(company);
         
         // COMPLETE THE IMPLEMENTATION...
+        // If the item's present, delete it, otherwise don't!
         if (int(company_index) == COMPANY_NOT_FOUND) {
             return false;
         }
         else {
-            for (int i = int(company_index)+1; i < int(used_slots); i++)
-                company_array[i-1]=company_array[i]; //shift everything in array
+            for (int i = int(company_index) + 1; i < int(used_slots); i++) {
+                company_array[i - 1] = company_array[i]; //shift everything in array
+            }
             used_slots--;
             return true;
         }
@@ -146,8 +165,10 @@ namespace coen79_lab7
         assert(cName.length() > 0 && pName.length() > 0);
 
         // COMPLETE THE IMPLEMENTATION...
+        // Search for the given item
         size_type c_index = search_company(cName);
         
+        // If the item's present, delete it, otherwise don't!
         if (int(c_index) == COMPANY_NOT_FOUND)
             return false;
         else
@@ -163,12 +184,17 @@ namespace coen79_lab7
         assert(company.length() > 0);
 
         // COMPLETE THE IMPLEMENTATION...
+
+        // Loop through the company
         for (int i = 0; i < int(used_slots); i++) {
+            // See if the company is present
             if(company == company_array[i].get_name()) {
+                // Return the index it was found at
                 return i;
                 break;
             }
         }
+        // Otherwise, we know the company wasn't found
         return COMPANY_NOT_FOUND;
     }
     
