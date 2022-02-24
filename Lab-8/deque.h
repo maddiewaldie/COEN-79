@@ -255,10 +255,12 @@ namespace coen79_lab8
                 for (size_type block_item_index = 0; block_item_index < block_size; ++block_item_index)
                 {
                     // STUDENT WORK...
+                    // If the front pointer of source is equal to an entry of source.block_pointers at the given index, set the front pointer  
                     if (((source.block_pointers[bp_array_index] + block_item_index)) == source.front_ptr) {
                         front_ptr = block_pointers[bp_array_index] + block_item_index;
                     }
                     
+                    // If the back pointer of source is equal to an entry of source.block_pointers at the given index, set the back pointer
                     if (((source.block_pointers[bp_array_index] + block_item_index)) == source.back_ptr) {
                         back_ptr = block_pointers[bp_array_index] + block_item_index;
                     }    
@@ -293,11 +295,14 @@ namespace coen79_lab8
         
         // Clear the data blocks
         // STUDENT WORK...
+        // If the block_pointers are null, our work is already done, so we can just return!
         if (block_pointers == NULL) {
             return;
         }
         
+        // Loop through the array of block_pointers
         for (size_type i = 0; i < bp_array_size; ++i) {
+            // If the element isn't null, delete it and set it to null
             if(block_pointers[i] != NULL) {
                 delete [] block_pointers[i];
                 block_pointers[i] = NULL;
