@@ -71,11 +71,19 @@ namespace coen79_lab8
         bool operator ==(const deque_iterator other) const
         {
             // STUDENT WORK...
-            return (block_pointers == other.block_pointers && block_pointers_end == other.block_pointers_end
-            && first_bp == other.first_bp && last_bp == other.last_bp
-            && front_ptr == other.front_ptr && back_ptr == other.back_ptr
-            && bp_array_size == other.bp_array_size && block_size == other.block_size
-            && cursor == other.cursor && current_boundary == other.current_boundary && current_block_pointer == other.current_block_pointer );
+            // Return whether or not all of this object's variables are equal to the provided object's variables
+            return (block_pointers == other.block_pointers 
+                    && block_pointers_end == other.block_pointers_end
+                    && first_bp == other.first_bp 
+                    && last_bp == other.last_bp
+                    && front_ptr == other.front_ptr 
+                    && back_ptr == other.back_ptr
+                    && bp_array_size == other.bp_array_size 
+                    && block_size == other.block_size
+                    && cursor == other.cursor 
+                    && current_boundary == other.current_boundary 
+                    && current_block_pointer == other.current_block_pointer 
+            );
             
         }
         

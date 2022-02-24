@@ -223,7 +223,7 @@ namespace coen79_lab8
         // Create a new array of block pointers
         // STUDENT WORK...
         block_pointers = new value_type* [bp_array_size];
-        block_pointers_end = block_pointers + bp_array_size-1;
+        block_pointers_end = block_pointers + bp_array_size - 1;
         
         // Copy the data blocks of "source" object
         for (size_type bp_array_index = 0; bp_array_index < source.bp_array_size; ++bp_array_index)
@@ -237,13 +237,15 @@ namespace coen79_lab8
             {
                 //If this is the first_bp of source, then set the first_bp of this deque
                 // STUDENT WORK...
-                if (*(source.first_bp) == source.block_pointers[bp_array_index])
+                if (*(source.first_bp) == source.block_pointers[bp_array_index]) {
                     first_bp = block_pointers + bp_array_index;
+                }
                 
                 //If this is the back_ptr of source, then set the back_ptr of this deque
                 // STUDENT WORK...
-                if (*(source.last_bp) == source.block_pointers[bp_array_index])
+                if (*(source.last_bp) == source.block_pointers[bp_array_index]) {
                     last_bp = block_pointers + bp_array_index;
+                }
                 
                 // Create a data block
                 block_pointers[bp_array_index] = new value_type [block_size];
@@ -253,11 +255,13 @@ namespace coen79_lab8
                 for (size_type block_item_index = 0; block_item_index < block_size; ++block_item_index)
                 {
                     // STUDENT WORK...
-                    if ((source.block_pointers[bp_array_index] + block_item_index) == source.front_ptr)
+                    if (((source.block_pointers[bp_array_index] + block_item_index)) == source.front_ptr) {
                         front_ptr = block_pointers[bp_array_index] + block_item_index;
+                    }
                     
-                    if ((source.block_pointers[bp_array_index] + block_item_index) == source.back_ptr)
+                    if (((source.block_pointers[bp_array_index] + block_item_index)) == source.back_ptr) {
                         back_ptr = block_pointers[bp_array_index] + block_item_index;
+                    }    
                     
                     *(block_pointers[bp_array_index] + block_item_index) = *(source.block_pointers[bp_array_index] + block_item_index);
                 }
@@ -289,13 +293,12 @@ namespace coen79_lab8
         
         // Clear the data blocks
         // STUDENT WORK...
-        if (block_pointers == NULL) //if entire array is NULL
+        if (block_pointers == NULL) {
             return;
+        }
         
-        for (size_type i = 0; i < bp_array_size; ++i)
-        {
-            if(block_pointers[i]!=NULL) //delete if not NULL
-            {
+        for (size_type i = 0; i < bp_array_size; ++i) {
+            if(block_pointers[i] != NULL) {
                 delete [] block_pointers[i];
                 block_pointers[i] = NULL;
             }
@@ -387,7 +390,7 @@ namespace coen79_lab8
             // STUDENT WORK...
             --first_bp;
             *first_bp = new value_type[BLOCK_SIZE];
-            front_ptr = ((*first_bp) + (BLOCK_SIZE-1));
+            front_ptr = ((*first_bp) + (BLOCK_SIZE - 1));
             *front_ptr = entry;
         }
         
@@ -399,7 +402,7 @@ namespace coen79_lab8
             reserve();
             --first_bp;
             *first_bp = new value_type[BLOCK_SIZE];
-            front_ptr = ((*first_bp) + (BLOCK_SIZE-1));
+            front_ptr = ((*first_bp) + (BLOCK_SIZE - 1));
             *front_ptr = entry;
         }
     }
@@ -503,7 +506,7 @@ namespace coen79_lab8
             delete [] back_ptr;
             *last_bp = NULL;
             --last_bp;
-            back_ptr = (*last_bp) + (BLOCK_SIZE-1); //new back element is now the last element in the last block
+            back_ptr = (*last_bp) + (BLOCK_SIZE - 1); //new back element is now the last element in the last block
         }
         else
         {
