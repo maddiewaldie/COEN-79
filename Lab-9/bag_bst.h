@@ -57,7 +57,7 @@
 
 #ifndef COEN79_BST_BAG
 #define COEN79_BST_BAG
-
+#include <iostream>
 #include <cstdlib>     // Provides NULL and size_t
 #include "bintree.h"   // Provides binary_tree_node and related functions
 

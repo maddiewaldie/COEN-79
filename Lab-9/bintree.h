@@ -105,7 +105,7 @@
 
 #ifndef COEN79_BINTREE_H
 #define COEN79_BINTREE_H
-
+#include <iostream>
 #include <cstdlib>  // Provides NULL and size_t
 #include <cassert>
 #include <iomanip>
@@ -284,10 +284,7 @@ namespace coen79_lab9
             return 0;
         else
             // STUDENT WORK
-            size_t temp = 1;
-            temp += tree_size(node_ptr->left());
-            temp += tree_size(node_ptr->right());
-            return temp;
+	    return 1 + tree_size(node_ptr->right()) + tree_size(node_ptr->left());
     }
 }
 
