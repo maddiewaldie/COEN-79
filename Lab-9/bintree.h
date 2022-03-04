@@ -284,10 +284,10 @@ namespace coen79_lab9
             return 0;
         else
             // STUDENT WORK
-            size_t sizeOfTree = 1;
-            sizeOfTree += tree_size(node_ptr->left());
-            sizeOfTree += tree_size(node_ptr->right());
-            return sizeOfTree;
+            size_t temp = 1;
+            temp += tree_size(node_ptr->left());
+            temp += tree_size(node_ptr->right());
+            return temp;
     }
 }
 
