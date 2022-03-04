@@ -195,6 +195,9 @@ namespace coen79_lab9
         if (node_ptr != NULL)
         {
             // STUDENT WORK
+            inorder(f, node_ptr->left());
+            f(node_ptr->data());
+            inorder(f, node_ptr->right());
         }
     }
     
@@ -203,6 +206,9 @@ namespace coen79_lab9
     // Library facilities used: cstdlib
     {
         // STUDENT WORK
+        postorder(f, node_ptr->left());
+		postorder(f, node_ptr->right());
+		f(node_ptr->data());
     }
     
     template <class Process, class BTNode>
@@ -210,6 +216,9 @@ namespace coen79_lab9
     // Library facilities used: cstdlib
     {
         // STUDENT WORK
+        f(node_ptr->data());
+		preorder(f, node_ptr->left());
+		preorder(f, node_ptr->right());
     }
     
     template <class Item, class SizeType>
@@ -237,6 +246,10 @@ namespace coen79_lab9
             tree_clear( child );
             
             // STUDENT WORK
+            child = root_ptr->right();
+            tree_clear(child);
+            delete root_ptr;
+            return;
         }
     }
     
@@ -253,6 +266,12 @@ namespace coen79_lab9
         else
         {
             // STUDENT WORK
+            binary_tree_node<Item> *tmp = new binary_tree_node<Item>(root_ptr->data());
+
+            tmp->set_left(tree_copy(root_ptr->left()));
+            tmp->set_right(tree_copy(root_ptr->right()));
+
+            return tmp;
         }
     }
     
@@ -265,6 +284,10 @@ namespace coen79_lab9
             return 0;
         else
             // STUDENT WORK
+            size_t sizeOfTree = 1;
+            sizeOfTree += tree_size(node_ptr->left());
+            sizeOfTree += tree_size(node_ptr->right());
+            return sizeOfTree;
     }
 }
 
